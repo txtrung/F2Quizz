@@ -1,0 +1,14 @@
+{
+  "global": {
+    "app-name": "F2Quizz"
+  },
+  "header": {
+    "login": "Đăng nhập",
+    "logout": "Đăng xuất",
+    "new": "Chơi gì thì chơi"
+  },
+  "main-content": {
+    "previous-button": "Cho coi lại câu trước",
+    "next-button": "Tiếp chứ không mời"
+  }
+}

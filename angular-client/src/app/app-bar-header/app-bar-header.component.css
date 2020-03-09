@@ -1,0 +1,34 @@
+:host {
+    width: 100%;
+}
+mat-toolbar {
+    background: unset;
+}
+
+.example-icon {
+    padding: 0 14px;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.logo {
+    padding: unset;
+}
+.logo .logo-name{
+    margin-left: 10px;
+    font-weight: 900;
+}
+
+.play-new, .login, .logout{
+    background: unset;
+    font-weight: 900;
+}
+.play-new {
+
+}
+.login {
+}
+.logout {
+}

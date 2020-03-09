@@ -1,0 +1,28 @@
+.mat-grid-tile-header {
+    height: 10% !important;
+    background: #9c27b0 !important;
+}
+.mat-grid-tile-body {
+    background-color: tomato;
+    width: 100%;
+    height: 75%;
+    top: 10%;
+    position: absolute;
+}
+.mat-grid-tile-body .left{
+    background-color: #262626;
+    float: left;
+    height: 100%;
+    width: 10%;
+}
+.mat-grid-tile-body .right{
+    background-color: #262626;
+    height: 100%;
+    width: 20%;
+    float: left;
+}
+.mat-grid-tile-footer {
+    height: 15% !important;
+    background: #9c27b0 !important;
+}
+
