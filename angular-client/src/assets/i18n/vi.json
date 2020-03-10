@@ -9,6 +9,7 @@
   },
   "main-content": {
     "previous-button": "Cho coi lại câu trước",
-    "next-button": "Tiếp chứ không mời"
+    "next-button": "Tiếp chứ không mời",
+    "check-answer-button": "Kết quả"
   }
 }

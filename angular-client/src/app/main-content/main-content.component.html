@@ -1,17 +1,32 @@
-<div class="middle-question-category">
-    <span class="title">Đi đố</span>
-    <span class="description">đi để bị đố, đố để bị đi</span>
+
+<div *ngIf="quizz" class="middle-question-category">
+    <span class="title">{{categoryTitle}}</span>
+    <span class="description">{{categoryDescription}}</span>
 </div>
-<div class="middle-question-content">
+<div *ngIf="questions" class="middle-question-content">
     <div class="content-question">
         <img src="/assets/imgs/hand-two-finger.svg">
-        <span class="">Câu đố X1: Bạn biết câu hỏi đang hỏi gì không?</span>
+        <span class="">{{questions.title}}</span>
     </div>
     <div class="content-answer">
-        
+        <mat-card>
+            <mat-card-content>
+                <mat-radio-group
+                        aria-labelledby="example-radio-group-label"
+                        class="answer-radio-group"
+                        [(ngModel)]="questions.question_id">
+                    <mat-radio-button class="answer-radio-button" *ngFor="let answer of answers" [value]="answer">
+                    <span class="wrap-mat-radio-label">
+                        {{ answer.content }}
+                    </span>
+                    </mat-radio-button>
+                </mat-radio-group>
+            </mat-card-content>
+        </mat-card>
     </div>
     <div class="content-button">
-        <button class="previous-question" mat-flat-button>{{"main-content.previous-button" | translate}}</button>
-        <button class="next-question" mat-flat-button>{{"main-content.next-button" | translate}}</button>
+        <button class="previous-question" mat-flat-button (click)="goPriviousQuestion()">{{"main-content.previous-button" | translate}}</button>
+        <button class="next-question " mat-flat-button (click)="goNextQuestion()">{{"main-content.next-button" | translate}}</button>
+        <button class="check-all-question " mat-flat-button (click)="checkAllQuestions()">{{"main-content.check-answer-button" | translate}}</button>
     </div>
 </div>

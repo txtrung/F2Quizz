@@ -6,7 +6,14 @@ import { AppComponent } from './app.component';
 import {FormsModule} from "@angular/forms";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
-import {MatGridListModule, MatIconModule, MatToolbarModule} from "@angular/material";
+import {
+  MatCardModule,
+  MatCheckboxModule,
+  MatGridListModule,
+  MatIconModule,
+  MatRadioModule,
+  MatToolbarModule
+} from "@angular/material";
 import { MasterPageComponent } from './master-page/master-page.component';
 import { QuizzesComponent } from './quizzes/quizzes.component';
 import { AppBarHeaderComponent } from './app-bar-header/app-bar-header.component';
@@ -47,6 +54,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatRadioModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
