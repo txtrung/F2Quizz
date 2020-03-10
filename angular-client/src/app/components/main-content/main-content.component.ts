@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {Quizz} from "../models/quizz";
-import {Question} from "../models/question";
-import {Answer} from "../models/answer";
+import {Quizz} from "../../models/quizz";
+import {Question} from "../../models/question";
+import {Answer} from "../../models/answer";
+import {MatDialog} from "@angular/material";
+import {ResultsComponent} from "../results/results.component";
 
 @Component({
   selector: 'app-main-content',
@@ -73,7 +75,9 @@ export class MainContentComponent implements OnInit {
   ];
 
 
-  constructor() {
+  constructor(
+      public dialog: MatDialog
+  ) {
   }
 
   ngOnInit() {
@@ -117,11 +121,26 @@ export class MainContentComponent implements OnInit {
     }
   }
 
+  animal: string;
+  name: string;
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ResultsComponent, {
+      width: '250px',
+      data: {name: this.name, animal: this.animal}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.animal = result;
+    });
+  }
+
   /**
    *
    */
   checkAllQuestions(): void {
-
+    this.openDialog();
   }
 
 }

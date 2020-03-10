@@ -26,7 +26,7 @@
     </div>
     <div class="content-button">
         <button class="previous-question" mat-flat-button (click)="goPriviousQuestion()">{{"main-content.previous-button" | translate}}</button>
-        <button class="next-question " mat-flat-button (click)="goNextQuestion()">{{"main-content.next-button" | translate}}</button>
-        <button class="check-all-question " mat-flat-button (click)="checkAllQuestions()">{{"main-content.check-answer-button" | translate}}</button>
+        <button *ngIf="questionsOrder != quizz[quizzsOrder].questions.length-1" class="next-question " mat-flat-button (click)="goNextQuestion()">{{"main-content.next-button" | translate}}</button>
+        <button *ngIf="questionsOrder == quizz[quizzsOrder].questions.length-1" class="check-all-question " mat-flat-button (click)="checkAllQuestions()">{{"main-content.check-answer-button" | translate}}</button>
     </div>
 </div>

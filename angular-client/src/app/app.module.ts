@@ -7,21 +7,23 @@ import {FormsModule} from "@angular/forms";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
 import {
-  MatCardModule,
-  MatCheckboxModule,
-  MatGridListModule,
-  MatIconModule,
-  MatRadioModule,
-  MatToolbarModule
+    MatCardModule,
+    MatCheckboxModule, MatDialogModule, MatFormFieldModule,
+    MatGridListModule,
+    MatIconModule,
+    MatRadioModule,
+    MatToolbarModule,
+    MatInputModule
 } from "@angular/material";
-import { MasterPageComponent } from './master-page/master-page.component';
-import { QuizzesComponent } from './quizzes/quizzes.component';
-import { AppBarHeaderComponent } from './app-bar-header/app-bar-header.component';
+import { MasterPageComponent } from './components/master-page/master-page.component';
+import { QuizzesComponent } from './components/quizzes/quizzes.component';
+import { AppBarHeaderComponent } from './components/app-bar-header/app-bar-header.component';
 import {MatButtonModule} from '@angular/material/button';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
-import { MainContentComponent } from './main-content/main-content.component';
+import { MainContentComponent } from './components/main-content/main-content.component';
+import { ResultsComponent } from './components/results/results.component';
 
 // required for AOT compilation
 export function HttpLoaderFactory(http: HttpClient) {
@@ -34,30 +36,35 @@ export function HttpLoaderFactory(http: HttpClient) {
     MasterPageComponent,
     QuizzesComponent,
     AppBarHeaderComponent,
-    MainContentComponent
+    MainContentComponent,
+    ResultsComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: (HttpLoaderFactory),
-        deps: [HttpClient],
-      }
-    }),
-    AppRoutingModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    MatSliderModule,
-    MatGridListModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatRadioModule,
-  ],
+    entryComponents: [ResultsComponent],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: (HttpLoaderFactory),
+                deps: [HttpClient],
+            }
+        }),
+        AppRoutingModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        MatSliderModule,
+        MatGridListModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatButtonModule,
+        MatCardModule,
+        MatCheckboxModule,
+        MatRadioModule,
+        MatFormFieldModule,
+        MatDialogModule,
+        MatInputModule,
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
