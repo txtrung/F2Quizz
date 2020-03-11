@@ -39,16 +39,17 @@ return [
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'v1/questions', // our correct answer api rule,
-                    'tokens' => [
-                        '{id}' => '<id:\\w+>'
-                    ]
+                    'extraPatterns' => [
+                        'GET {id}' => 'get',
+//                        'GET {id}/answer' => 'answer', // 'xxxxx' refers to 'actionXxxxx'
+                    ],
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'v1/answers', // our answer api rule,
-                    'tokens' => [
-                        '{id}' => '<id:\\w+>'
-                    ]
+                    'extraPatterns' => [
+                        'GET {id}/question' => 'question', // 'xxxxx' refers to 'actionXxxxx'
+                    ],
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
@@ -56,6 +57,14 @@ return [
                     'tokens' => [
                         '{id}' => '<id:\\w+>'
                     ]
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'v1/quizzes',
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET {id}/question' => 'question',
+                    ],
                 ],
             ],
         ],

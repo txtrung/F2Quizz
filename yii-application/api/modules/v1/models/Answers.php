@@ -36,4 +36,8 @@ class Answers extends ActiveRecord
         ];
     }
 
+    public function getQuestion() {
+        return $this->hasOne(Questions::className(),['id' => 'question_id']);
+    }
+
 }
