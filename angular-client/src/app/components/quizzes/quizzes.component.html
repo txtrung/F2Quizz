@@ -1,1 +1,11 @@
-<p>quizzes works!</p>
+<div class="overlay" *ngIf="loading"></div>
+<div class="main-content" [ngStyle]="{'background-image': 'url(/assets/imgs/loading2.svg)'}" *ngIf="loading"></div>
+<div *ngIf="quizzes">
+    <ul class="quizzes">
+        <li *ngFor="let quizz of quizzes">
+            <a (click)="goToQuestionsPage({id: quizz.id,title: quizz.title,des: quizz.description});quizz.id='';quizz.title='';quizz.description=''">
+                {{ quizz.title + ': ' + quizz.description}}
+            </a>
+        </li>
+    </ul>
+</div>

@@ -4,7 +4,29 @@
     height: 100%;
     width: 70%;
     color: white;
+    position: relative;
 }
+
+.main-content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 500000;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.overlay{
+    width: 100%;
+    height: 100%;
+    background-color: darkslategray;
+    opacity: 0.5;
+    z-index: 499999;
+    position: absolute;
+}
+
+
 .middle-question-category {
     width: 100%;
     height: 20%;

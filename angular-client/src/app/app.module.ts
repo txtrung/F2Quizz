@@ -22,8 +22,10 @@ import {MatButtonModule} from '@angular/material/button';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
-import { MainContentComponent } from './components/main-content/main-content.component';
+import { QuestionsComponent } from './components/questions/questions.component';
 import { ResultsComponent } from './components/results/results.component';
+import {QuizzService} from "./services/quizz.service";
+import {QuestionService} from "./services/question.service";
 
 // required for AOT compilation
 export function HttpLoaderFactory(http: HttpClient) {
@@ -36,7 +38,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MasterPageComponent,
     QuizzesComponent,
     AppBarHeaderComponent,
-    MainContentComponent,
+    QuestionsComponent,
     ResultsComponent
   ],
     entryComponents: [ResultsComponent],
@@ -65,7 +67,10 @@ export function HttpLoaderFactory(http: HttpClient) {
         MatDialogModule,
         MatInputModule,
     ],
-  providers: [],
+  providers: [
+    QuizzService,
+    QuestionService
+  ],
   bootstrap: [AppComponent]
 })
 

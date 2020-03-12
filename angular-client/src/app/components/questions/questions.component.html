@@ -1,12 +1,13 @@
-
+<div class="overlay" *ngIf="loading"></div>
+<div class="main-content" [ngStyle]="{'background-image': 'url(/assets/imgs/loading2.svg)'}" *ngIf="loading"></div>
 <div *ngIf="quizz" class="middle-question-category">
     <span class="title">{{categoryTitle}}</span>
     <span class="description">{{categoryDescription}}</span>
 </div>
-<div *ngIf="questions" class="middle-question-content">
+<div *ngIf="question" class="middle-question-content">
     <div class="content-question">
         <img src="/assets/imgs/hand-two-finger.svg">
-        <span class="">{{questions.title}}</span>
+        <span class="">{{question.content}}</span>
     </div>
     <div class="content-answer">
         <mat-card>
@@ -14,7 +15,7 @@
                 <mat-radio-group
                         aria-labelledby="example-radio-group-label"
                         class="answer-radio-group"
-                        [(ngModel)]="questions.question_id">
+                        [(ngModel)]="question.id">
                     <mat-radio-button class="answer-radio-button" *ngFor="let answer of answers" [value]="answer">
                     <span class="wrap-mat-radio-label">
                         {{ answer.content }}
@@ -25,8 +26,9 @@
         </mat-card>
     </div>
     <div class="content-button">
-        <button class="previous-question" mat-flat-button (click)="goPriviousQuestion()">{{"main-content.previous-button" | translate}}</button>
-        <button *ngIf="questionsOrder != quizz[quizzsOrder].questions.length-1" class="next-question " mat-flat-button (click)="goNextQuestion()">{{"main-content.next-button" | translate}}</button>
-        <button *ngIf="questionsOrder == quizz[quizzsOrder].questions.length-1" class="check-all-question " mat-flat-button (click)="checkAllQuestions()">{{"main-content.check-answer-button" | translate}}</button>
+        <button *ngIf="questionsOrder !== 0" class="previous-question" mat-flat-button (click)="goPriviousQuestion()">{{"main-content.previous-button" | translate}}</button>
+        <button *ngIf="questionsOrder != questions.length-1" class="next-question " mat-flat-button (click)="goNextQuestion()">{{"main-content.next-button" | translate}}</button>
+        <button *ngIf="questionsOrder == questions.length-1" class="check-all-question " mat-flat-button (click)="checkAllQuestions()">{{"main-content.check-answer-button" | translate}}</button>
     </div>
 </div>
+

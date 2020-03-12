@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
+import {GlobalConstants} from "../../common/global-constants";
 
 @Component({
   selector: 'app-master-page',
@@ -7,9 +9,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MasterPageComponent implements OnInit {
 
-  constructor() { }
+  private quizzesPage: boolean = false;
+  private questionsPage: boolean = false;
+
+  constructor(
+      private route: ActivatedRoute
+  ) { }
 
   ngOnInit() {
+    console.log(this.route);
+    if (this.route.snapshot.url[0].path === GlobalConstants.quizzesUrl) {
+      this.setLocationValue(true,false);
+    }
+    if (this.route.snapshot.url[0].path === GlobalConstants.questionsUrl) {
+      this.setLocationValue(false,true);
+    }
+  }
+
+  setLocationValue(quizz,questions): void {
+    GlobalConstants.quizzesPage = quizz;
+    GlobalConstants.questionsPage = questions;
+    this.quizzesPage = quizz;
+    this.questionsPage = questions;
   }
 
 }
