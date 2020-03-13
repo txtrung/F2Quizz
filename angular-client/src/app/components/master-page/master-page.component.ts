@@ -17,7 +17,6 @@ export class MasterPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.route);
     if (this.route.snapshot.url[0].path === GlobalConstants.quizzesUrl) {
       this.setLocationValue(true,false);
     }

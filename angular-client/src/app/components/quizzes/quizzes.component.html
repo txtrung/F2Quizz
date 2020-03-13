@@ -1,5 +1,6 @@
 <div class="overlay" *ngIf="loading"></div>
 <div class="main-content" [ngStyle]="{'background-image': 'url(/assets/imgs/loading2.svg)'}" *ngIf="loading"></div>
+<div *ngIf="errorMsg"><h3>{{errorMsg}}</h3></div>
 <div *ngIf="quizzes">
     <ul class="quizzes">
         <li *ngFor="let quizz of quizzes">

@@ -26,4 +26,12 @@ export class ResultsComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
+
+  onGetPrize(): void {
+
+  }
+
+  onContinuePlay(): void {
+
+  }
 }

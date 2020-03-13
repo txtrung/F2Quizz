@@ -11,5 +11,11 @@
     "previous-button": "Cho coi lại câu trước",
     "next-button": "Tiếp chứ không mời",
     "check-answer-button": "Kết quả"
+  },
+  "result": {
+    "title": "Kết quả",
+    "stop-play": "Nghỉ chơi",
+    "continue-play": "Chơi tiếp",
+    "get-prize": "Trao đổi quà"
   }
 }

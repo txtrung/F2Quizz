@@ -13,6 +13,7 @@ import {GlobalConstants} from "../../common/global-constants";
 export class QuizzesComponent implements OnInit {
 
   public quizzes = [];
+  public errorMsg;
   private loading = true;
 
   constructor(
@@ -24,11 +25,13 @@ export class QuizzesComponent implements OnInit {
     this._quizzService.getQuizzes().subscribe(data => {
       this.quizzes = data;
       this.loading = false;
-    });
+    },error => this.errorMsg = error);
   }
 
   goToQuestionsPage(quizz): void {
-    this.router.navigateByUrl('/'+GlobalConstants.questionsUrl, {state: {quizz:JSON.stringify(quizz)}});
+    let quizzString = JSON.stringify(quizz);
+    this._quizzService.setCurrentQuizzInfo(quizzString);
+    this.router.navigateByUrl('/'+GlobalConstants.questionsUrl, {state: {quizz:quizzString}});
   }
 
 }

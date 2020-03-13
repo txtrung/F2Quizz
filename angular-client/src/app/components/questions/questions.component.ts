@@ -1,12 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import {Quizz} from "../../models/quizz";
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Question} from "../../models/question";
-import {Answer} from "../../models/answer";
 import {MatDialog} from "@angular/material";
 import {ResultsComponent} from "../results/results.component";
 import {QuizzService} from "../../services/quizz.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {__param} from "tslib";
+import {QuestionService} from "../../services/question.service";
 
 @Component({
   selector: 'app-questions',
@@ -15,46 +13,61 @@ import {__param} from "tslib";
 })
 export class QuestionsComponent implements OnInit {
 
+  public errorMsg;
   private loading: boolean = true;
   private categoryTitle: string;
   private categoryDescription: string;
   private answers = [];
   private questionsOrder: any;
-
-  // @ts-ignore
-  private quizz: Quizz = {
-    id: 1,
-    title: "Đi đố",
-    description: "đi để bị đố, đố để bị đi"
-  };
-
   private questions = [];
   private question: Question;
+  private quizz;
+  private answeredQuestion: any;
+  private checkedAnswer = [];
+  private checkedResult = 0;
 
   constructor(
       private _quizzService: QuizzService,
+      private _questionService: QuestionService,
       public dialog: MatDialog,
       private route: ActivatedRoute,
-      private router: Router
+      private router: Router,
+      private _cdr: ChangeDetectorRef
   ) {
   }
 
   ngOnInit() {
-    // let aaa = this.router.lastSuccessfulNavigation;
-    let param = JSON.parse(this.route.snapshot.queryParams.quizz);
-    if (param !== undefined && param) {
-      this.categoryTitle = param.title;
-      this.categoryDescription = param.des;
-      this._quizzService.getQuestionByQuizzId(param.id).subscribe(data => {
+    this.quizz = window.history.state.quizz !== undefined ? JSON.parse(window.history.state.quizz) : this._quizzService.getCurrentQuizzInfo();
+    if (this.quizz !== undefined && this.quizz) {
+      this.categoryTitle = this.quizz.title;
+      this.categoryDescription = this.quizz.des;
+      this._quizzService.getQuestionByQuizzId(this.quizz.id).subscribe(data => {
         this.loading = false;
+        this.answeredQuestion = this._questionService.getAnsweredData();
         this.questions = data;
         if (this.questions.length > 0) {
           this.questionsOrder = 0;
           this.setContentPage(this.questionsOrder);
         }
-      });
+      }, error => this.errorMsg = error);
     }
   }
+
+  ngAfterViewChecked() {
+    let listRadioButton = document.getElementsByClassName("answer-radio-button");
+    if (listRadioButton.length > 0) {
+      for (let i = 0 ; i < listRadioButton.length ; i++) {
+        for (let j = 0 ; j < listRadioButton[i].attributes.length ; j++) {
+          if (listRadioButton[i].attributes[j].name === "ng-reflect-checked") {
+            if (listRadioButton[i].attributes[j].value == "true") {
+              listRadioButton[i].className += ' mat-radio-checked';
+            }
+          }
+        }
+      }
+    }
+  }
+
 
   /**
    *
@@ -85,12 +98,33 @@ export class QuestionsComponent implements OnInit {
     }
   }
 
+  checkedInput(answer): boolean {
+    if (this.answeredQuestion && this.answeredQuestion[this.question.id] !== undefined && this.answeredQuestion[this.question.id].answerId == answer.id && this.answeredQuestion[this.question.id].answerTag == answer.tag) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   *
+   */
+  onItemChange(target): void {
+    if (!this.answeredQuestion) this.answeredQuestion = {};
+    this.answeredQuestion[this.question.id] = {
+      questionId: this.question.id,
+      answerId: target.value ? target.value.id : '',
+      answerTag: target.value ? target.value.tag : ''
+    };
+
+    this._questionService.setAnsweredData(this.answeredQuestion);
+  }
+
   animal: string;
   name: string;
 
-  openDialog(): void {
+  openDialog(rightAnswer,totalQuestion): void {
     const dialogRef = this.dialog.open(ResultsComponent, {
-      width: '250px',
+      width: '30%',
       data: {name: this.name, animal: this.animal}
     });
 
@@ -104,7 +138,19 @@ export class QuestionsComponent implements OnInit {
    *
    */
   checkAllQuestions(): void {
-    this.openDialog();
+    let self = this;
+    let rightAnswer = 0;
+    let answeredStore = this._questionService.getAnsweredData();
+    self.questions.map( item =>{
+      if (answeredStore[item.id].tag == item.correct_answer[0].right_answer) {
+        rightAnswer++;
+      } else {
+        if (rightAnswer > 0) {
+          rightAnswer--;
+        }
+      }
+    });
+    this.openDialog(this.checkedResult,3);
   }
 
 }
