@@ -16,6 +16,12 @@ export class QuestionService {
     localStorage.setItem('answer',JSON.stringify([data]));
   }
   getAnsweredData(): any {
-    return this.sharedService.convertStringToJson(localStorage.getItem('answer'))[0];
+    if (localStorage.getItem('answer')) {
+      return this.sharedService.convertStringToJson(localStorage.getItem('answer'))[0];
+    }
+    return null;
+  }
+  removeAnsweredData(): void {
+    localStorage.removeItem('answer');
   }
 }

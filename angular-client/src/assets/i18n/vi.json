@@ -15,7 +15,9 @@
   "result": {
     "title": "Kết quả",
     "stop-play": "Nghỉ chơi",
-    "continue-play": "Chơi tiếp",
-    "get-prize": "Trao đổi quà"
+    "continue-play": "Ba cái câu đố này có là gì… Đồ Mới.. Mời đố",
+    "get-prize": "Trao đổi quà",
+    "result-content-1": "Bạn đúng",
+    "result-sentence": "câu"
   }
 }

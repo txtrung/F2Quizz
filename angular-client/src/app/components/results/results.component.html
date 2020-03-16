@@ -1,9 +1,9 @@
 <h1 mat-dialog-title>{{"result.title" | translate}}</h1>
 <div mat-dialog-content>
-    <p>Bạn đúng 1 / 2 câu</p>
+    <p>{{"result.result-content-1" | translate}} {{rightAnswers}} / {{totalQuestions}} {{"result.result-sentence" | translate}}</p>
 </div>
 <div mat-dialog-actions>
     <button mat-button (click)="onNoClick()">{{"result.stop-play" | translate}}</button>
-    <button mat-button (click)="onGetPrize()">{{"result.get-prize" | translate}}</button>
+    <button *ngIf="win" mat-button (click)="onGetPrize()">{{"result.get-prize" | translate}}</button>
     <button mat-button (click)="onContinuePlay()">{{"result.continue-play" | translate}}</button>
 </div>

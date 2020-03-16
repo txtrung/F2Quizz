@@ -99,10 +99,8 @@ export class QuestionsComponent implements OnInit {
   }
 
   checkedInput(answer): boolean {
-    if (this.answeredQuestion && this.answeredQuestion[this.question.id] !== undefined && this.answeredQuestion[this.question.id].answerId == answer.id && this.answeredQuestion[this.question.id].answerTag == answer.tag) {
-      return true;
-    }
-    return false;
+    return this.answeredQuestion && this.answeredQuestion[this.question.id] !== undefined && this.answeredQuestion[this.question.id].answerId == answer.id && this.answeredQuestion[this.question.id].answerTag == answer.tag;
+
   }
 
   /**
@@ -122,10 +120,14 @@ export class QuestionsComponent implements OnInit {
   animal: string;
   name: string;
 
-  openDialog(rightAnswer,totalQuestion): void {
+  openDialog(rightAnswers,totalQuestions,quizzId): void {
     const dialogRef = this.dialog.open(ResultsComponent, {
-      width: '30%',
-      data: {name: this.name, animal: this.animal}
+      width: 'auto',
+      data: {
+        rightAnswers: rightAnswers,
+        totalQuestions: totalQuestions,
+        quizzId: quizzId
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -142,7 +144,7 @@ export class QuestionsComponent implements OnInit {
     let rightAnswer = 0;
     let answeredStore = this._questionService.getAnsweredData();
     self.questions.map( item =>{
-      if (answeredStore[item.id].tag == item.correct_answer[0].right_answer) {
+      if (answeredStore[item.id].answerTag == item.correct_answer[0].right_answer) {
         rightAnswer++;
       } else {
         if (rightAnswer > 0) {
@@ -150,7 +152,7 @@ export class QuestionsComponent implements OnInit {
         }
       }
     });
-    this.openDialog(this.checkedResult,3);
+    this.openDialog(rightAnswer,self.questions.length,this.quizz.id);
   }
 
 }
