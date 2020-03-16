@@ -66,6 +66,15 @@ return [
                         'GET {id}/question' => 'question',
                     ],
                 ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'v1/video-url',
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET random-reward' => 'random-reward',
+                        'GET random-exchange' => 'random-exchange'
+                    ],
+                ],
             ],
         ],
         'request' => [

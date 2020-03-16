@@ -9,15 +9,19 @@ use yii\web\AssetBundle;
  */
 class AppAsset extends AssetBundle
 {
+//    public $sourcePath = '@vendor/almasaeed2010/adminlte/plugins';
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
         'css/site.css',
+//        'chart.js/Chart.min.css',
     ];
     public $js = [
+//        'chart.js/Chart.bundle.min.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
+//        'dmstr\adminlte\web\AdminLteAsset',
     ];
 }
