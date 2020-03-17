@@ -9,14 +9,14 @@ use \yii\db\ActiveRecord;
  *
  * @author
  */
-class VideoUrl extends ActiveRecord
+class DownloadFile extends ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'video_url';
+        return 'download_file';
     }
 
     /**
@@ -38,10 +38,10 @@ class VideoUrl extends ActiveRecord
     }
 
     public function getRandomReward() {
-        return VideoUrl::find()->orderBy(new Expression('rand()'))->limit(1)->all();
+        return DownloadFile::find()->orderBy(new Expression('rand()'))->limit(1)->asArray()->all();
     }
 
     public function getRandomExchange() {
-        return VideoUrl::find()->orderBy(new Expression('rand()'))->limit(2)->all();
+        return DownloadFile::find()->orderBy(new Expression('rand()'))->limit(2)->all();
     }
 }

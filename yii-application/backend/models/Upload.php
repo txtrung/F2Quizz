@@ -25,10 +25,12 @@ class Upload extends Model
         try {
 //        if ($this->validate()) {
             foreach ($this->files as $file) {
-                $videoUrl = new VideoUrl();
-                $videoUrl->path = Yii::getAlias('@web/uploads') . '/'. $file->baseName . '.' . $file->extension;
+                $videoUrl = new DownloadFile();
+                $path = 'downloads/' . $file->baseName . '.' . $file->extension;
+//                $videoUrl->path = Yii::getAlias('@web/uploads') . '/'. $file->baseName . '.' . $file->extension;
+                $videoUrl->path = $path;
                 $videoUrl->save();
-                $file->saveAs('uploads/' . $file->baseName . '.' . $file->extension);
+                $file->saveAs($path);
             }
             return true;
 //        } else {

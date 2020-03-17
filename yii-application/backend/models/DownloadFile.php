@@ -8,14 +8,14 @@ use \yii\db\ActiveRecord;
  *
  * @author
  */
-class VideoUrl extends ActiveRecord
+class DownloadFile extends ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'video_url';
+        return 'download_file';
     }
 
     /**

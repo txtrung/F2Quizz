@@ -117,9 +117,6 @@ export class QuestionsComponent implements OnInit {
     this._questionService.setAnsweredData(this.answeredQuestion);
   }
 
-  animal: string;
-  name: string;
-
   openDialog(rightAnswers,totalQuestions,quizzId): void {
     const dialogRef = this.dialog.open(ResultsComponent, {
       width: 'auto',
@@ -132,7 +129,6 @@ export class QuestionsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.animal = result;
     });
   }
 
@@ -143,15 +139,17 @@ export class QuestionsComponent implements OnInit {
     let self = this;
     let rightAnswer = 0;
     let answeredStore = this._questionService.getAnsweredData();
-    self.questions.map( item =>{
-      if (answeredStore[item.id].answerTag == item.correct_answer[0].right_answer) {
-        rightAnswer++;
-      } else {
-        if (rightAnswer > 0) {
-          rightAnswer--;
+    if (answeredStore) {
+      self.questions.map( item =>{
+        if (answeredStore[item.id] !== undefined && answeredStore[item.id].answerTag == item.correct_answer[0].right_answer) {
+          rightAnswer++;
+        } else {
+          // if (rightAnswer > 0) {
+          //   rightAnswer--;
+          // }
         }
-      }
-    });
+      });
+    }
     this.openDialog(rightAnswer,self.questions.length,this.quizz.id);
   }
 

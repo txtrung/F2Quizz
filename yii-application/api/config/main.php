@@ -68,11 +68,20 @@ return [
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => 'v1/video-url',
+                    'controller' => 'v1/download-file',
                     'pluralize' => false,
                     'extraPatterns' => [
                         'GET random-reward' => 'random-reward',
                         'GET random-exchange' => 'random-exchange'
+                    ],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'v1/upload',
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET upload-file' => 'get-upload-file',
+                        'POST post-upload-file' => 'post-upload-file',
                     ],
                 ],
             ],

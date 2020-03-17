@@ -3,15 +3,17 @@
 namespace api\modules\v1\controllers;
 
 use api\modules\v1\models\Questions;
-use api\modules\v1\models\VideoUrl;
+use api\modules\v1\models\DownloadFile;
+use Yii;
 use yii\filters\Cors;
 use yii\helpers\ArrayHelper;
 use yii\rest\ActiveController;
+use yii\web\Response;
 
-class VideoUrlController extends ActiveController
+class DownloadFileController extends ActiveController
 {
     // We are using the regular web app modules:
-    public $modelClass = 'api\modules\v1\models\VideoUrl';
+    public $modelClass = 'api\modules\v1\models\DownloadFile';
 
     public function behaviors()
     {
@@ -27,12 +29,14 @@ class VideoUrlController extends ActiveController
     }
 
     public function actionRandomReward() {
-        $datas = (new VideoUrl)->getRandomReward();
-        return $datas;
+        $datas = (new DownloadFile)->getRandomReward();
+        $downloadPath = Yii::getAlias('@backend'.'/web/') . $datas[0]['path'];
+        Yii::$app->response->headers->set('data-pjax',0);
+        return Yii::$app->response->sendFile($downloadPath);
     }
 
     public function actionRandomExchange() {
-        $datas = (new VideoUrl)->getRandomExchange();
+        $datas = (new DownloadFile)->getRandomExchange();
         return $datas;
     }
 }

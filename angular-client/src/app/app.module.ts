@@ -26,6 +26,10 @@ import { QuestionsComponent } from './components/questions/questions.component';
 import { ResultsComponent } from './components/results/results.component';
 import {QuizzService} from "./services/quizz.service";
 import {QuestionService} from "./services/question.service";
+import { GiftComponent } from './components/gift/gift.component';
+import { GiftExchangeComponent } from './components/gift-exchange/gift-exchange.component';
+import {DownloadService} from "./services/download.service";
+import { HttpModule } from '@angular/http';
 
 // required for AOT compilation
 export function HttpLoaderFactory(http: HttpClient) {
@@ -39,12 +43,19 @@ export function HttpLoaderFactory(http: HttpClient) {
     QuizzesComponent,
     AppBarHeaderComponent,
     QuestionsComponent,
-    ResultsComponent
+    ResultsComponent,
+    GiftComponent,
+    GiftExchangeComponent
   ],
-    entryComponents: [ResultsComponent],
+    entryComponents: [
+        ResultsComponent,
+        GiftComponent,
+        GiftExchangeComponent
+    ],
     imports: [
         BrowserModule,
         HttpClientModule,
+        HttpModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -69,7 +80,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ],
   providers: [
     QuizzService,
-    QuestionService
+    QuestionService,
+    DownloadService
   ],
   bootstrap: [AppComponent]
 })
