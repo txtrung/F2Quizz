@@ -37,11 +37,15 @@ class DownloadFile extends ActiveRecord
         ];
     }
 
+    public function getFile($id) {
+        return DownloadFile::find()->where(['id' => $id])->asArray()->one();
+    }
+
     public function getRandomReward() {
         return DownloadFile::find()->orderBy(new Expression('rand()'))->limit(1)->asArray()->all();
     }
 
     public function getRandomExchange() {
-        return DownloadFile::find()->orderBy(new Expression('rand()'))->limit(2)->all();
+        return DownloadFile::find()->orderBy(new Expression('rand()'))->limit(2)->asArray()->all();
     }
 }

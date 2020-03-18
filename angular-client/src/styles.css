@@ -23,3 +23,26 @@ body, input[type="text"], button {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.result-action-button button {
+  background-color: #893f9b;
+}
+
+.main-content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 500000;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.overlay{
+  width: 100%;
+  height: 100%;
+  background-color: darkslategray;
+  opacity: 0.5;
+  z-index: 499999;
+  position: absolute;
+}

@@ -28,6 +28,14 @@ class DownloadFileController extends ActiveController
         ], parent::behaviors());
     }
 
+    public function actionDownload() {
+        $fileId = \Yii::$app->getRequest()->getQueryParams('file')['id'];
+        $datas = (new DownloadFile)->getFile($fileId);
+        $downloadPath = Yii::getAlias('@backend'.'/web/') . $datas['path'];
+        Yii::$app->response->headers->set('data-pjax',0);
+        return Yii::$app->response->sendFile($downloadPath);
+    }
+
     public function actionRandomReward() {
         $datas = (new DownloadFile)->getRandomReward();
         $downloadPath = Yii::getAlias('@backend'.'/web/') . $datas[0]['path'];

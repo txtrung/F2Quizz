@@ -28,6 +28,7 @@ export class GiftComponent implements OnInit {
     let self = this;
     this._downloadService.downloadFile().subscribe(response => {
       window.location.href = response.url;
+      self.errorMsg = '';
     },error => self.errorMsg = error);
   }
 

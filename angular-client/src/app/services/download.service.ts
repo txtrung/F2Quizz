@@ -11,6 +11,8 @@ import {ResponseContentType, Http} from "@angular/http";
 export class DownloadService {
 
   private _getDownloadFileUrl: string = GlobalConstants.serverURL + '/v1/download-file/random-reward';
+  private _getDownloadFileExchangeUrl: string = GlobalConstants.serverURL + '/v1/download-file/random-exchange';
+  private _getDownloadFileByIdUrl: string = GlobalConstants.serverURL + '/v1/download-file/';
 
   constructor(
       private http: Http,
@@ -18,14 +20,19 @@ export class DownloadService {
   ) { }
 
   getFile(): Observable<any>  {
-    return this.httpClient.get<any>(this._getDownloadFileUrl).pipe(catchError(this.errorHandler));
+    return this.httpClient.get<any>(this._getDownloadFileUrl);
   }
 
-  downloadFile(): Observable<any>{
-    return this.http.get(this._getDownloadFileUrl).pipe(catchError(this.errorHandler));
+  downloadFile(id=null): Observable<any>{
+    if (id) {
+      return this.http.get(this._getDownloadFileByIdUrl+id+'/file');
+    } else {
+      return this.http.get(this._getDownloadFileUrl);
+    }
   }
 
-  errorHandler(error: HttpErrorResponse) {
-    return Observable.throw(error.message || "Server Error");
+  getDownloadExchangeId(): Observable<any>{
+    return this.http.get(this._getDownloadFileExchangeUrl);
   }
+
 }

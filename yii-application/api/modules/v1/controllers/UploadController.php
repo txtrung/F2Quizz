@@ -2,14 +2,14 @@
 
 namespace api\modules\v1\controllers;
 
-use api\modules\v1\models\Questions;
-use api\modules\v1\models\DownloadFile;
+use api\modules\v1\models\UploadForm;
 use Yii;
-use yii\filters\auth\HttpBearerAuth;
 use yii\filters\Cors;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 use yii\rest\ActiveController;
 use yii\web\Response;
+use yii\web\UploadedFile;
 
 class UploadController extends ActiveController
 {
@@ -18,33 +18,12 @@ class UploadController extends ActiveController
 
     public function behaviors()
     {
-//        $behaviors = parent::behaviors();
-//        $behaviors['contentNegotiator'] = [
-//            'class' => ContentNegotiator::className(),
-//            'formats' => [
-//                'application/json' => Response::FORMAT_JSON,
-//            ],
-//        ];
-//        return array_merge($behaviors, [
-//            'corsFilter'  => [
-//                'class' => \common\filters\Cors::className(),
-//                'cors'  => [
-//                    // restrict access to domains:
-//                    'Origin'                           => ['http://localhost:4200','https ://localhost:4200','http://localhost:4200/questions'],
-//                    'Access-Control-Request-Method'    => ['POST', 'GET', 'OPTIONS'],
-//                    'Access-Control-Allow-Credentials' => true,
-////                    'Access-Control-Max-Age'           => 3600,                 // Cache (seconds)
-//                    'Access-Control-Allow-Headers' => ['authorization','X-Requested-With','content-type', 'some_custom_header']
-//                ],
-//            ],
-//        ]);
         return ArrayHelper::merge([
             [
                 'class' => Cors::className(),
                 'cors' => [
-                    'Origin' => ['http://localhost:4200','https ://localhost:4200','http://localhost:4200/questions'],
+                    'Origin' => ['http://localhost:4200'],
                     'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
-                    'Access-Control-Max-Age'           => 3600,
                     'Access-Control-Request-Headers' => ['Origin', 'X-Requested-With', 'Content-Type', 'accept', 'Authorization'],
                 ],
             ],
@@ -52,11 +31,52 @@ class UploadController extends ActiveController
     }
 
     public function actionPostUploadFile() {
-//        $post = Yii::$app->request->post();
-        $response = Yii::$app->response;
-        $response->format = \yii\web\Response::FORMAT_JSON;
-        $response->data = ['message' => 'hello world'];
-        return $response->send();
+//        var_dump(Yii::getAlias('@webroot'));
+//        var_dump(Url::base(true));
+//        die();
+        if($_FILES['file'])
+        {
+            $avatar_name = $_FILES["file"]["name"];
+            $avatar_tmp_name = $_FILES["file"]["tmp_name"];
+            $error = $_FILES["file"]["error"];
+
+            if($error > 0){
+                $response = array(
+                    "status" => "error",
+                    "error" => true,
+                    "message" => "Error uploading the file!"
+                );
+            }else
+            {
+                $random_name = rand(1000,1000000)."-".$avatar_name;
+                $upload_name = Yii::getAlias('@backend').'/web/uploads/'.strtolower($random_name);
+                $upload_name = preg_replace('/\s+/', '-', $upload_name);
+
+                if(move_uploaded_file($avatar_tmp_name , $upload_name)) {
+                    $response = array(
+                        "status" => "success",
+                        "error" => false,
+                        "message" => "File uploaded successfully",
+                        "url" => Yii::getAlias('@web')."/".$upload_name
+                    );
+                }else
+                {
+                    $response = array(
+                        "status" => "error",
+                        "error" => true,
+                        "message" => "Error uploading the file!"
+                    );
+                }
+            }
+        }else{
+            $response = array(
+                "status" => "error",
+                "error" => true,
+                "message" => "No file was sent!"
+            );
+        }
+
+        return $response;
     }
 
     public function actionGetUploadFile() {

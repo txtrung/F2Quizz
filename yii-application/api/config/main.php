@@ -71,6 +71,7 @@ return [
                     'controller' => 'v1/download-file',
                     'pluralize' => false,
                     'extraPatterns' => [
+                        'GET {id}/file' => 'download',
                         'GET random-reward' => 'random-reward',
                         'GET random-exchange' => 'random-exchange'
                     ],
