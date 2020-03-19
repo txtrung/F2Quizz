@@ -19,7 +19,7 @@ class QuizzesController extends ActiveController
             [
                 'class' => Cors::className(),
                 'cors' => [
-                    'Origin' => ['http://localhost:4200'],
+                    'Origin' => ['*'],
                     'Access-Control-Request-Method' => ['GET', 'HEAD', 'OPTIONS'],
                 ],
             ],
