@@ -1,42 +1,50 @@
-<h1 mat-dialog-title>{{"result.exchange-prize" | translate}}</h1>
-<div mat-dialog-content>
-    <p>{{"result.exchange-prize-content" | translate}}</p>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 offset-md-3">
-<!--                <div class="image-preview mb-3" *ngIf="previewUrl">-->
-<!--                    <img [src]="previewUrl" height="300" />-->
-<!--                </div>-->
+<app-loading [loading]="!loading"></app-loading>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            <h1 mat-dialog-title>{{"result.exchange-prize" | translate}}</h1>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div mat-dialog-content>
+            <p>{{"result.exchange-prize-content" | translate}}</p>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                        <!--                <div class="image-preview mb-3" *ngIf="previewUrl">-->
+                        <!--                    <img [src]="previewUrl" height="300" />-->
+                        <!--                </div>-->
 
-                <div class="overlay" *ngIf="loading"></div>
-                <div class="main-content" [ngStyle]="{'background-image': 'url(/assets/imgs/loading2.svg)'}" *ngIf="loading"></div>
+                        <div class="mat-error" *ngIf="uploadResponse && (uploadResponse.status === 0 || uploadResponse.status === 'error')">
+                            <p>{{uploadResponse.message}}</p>
+                        </div>
+                        <div class="success-upload" *ngIf="uploadResponse && uploadResponse.status === 'success'">
+                            <p>{{uploadResponse.message}}</p>
+                        </div>
 
-                <div class="mat-error" *ngIf="uploadResponse && (uploadResponse.status === 0 || uploadResponse.status === 'error')">
-                    <p>{{uploadResponse.message}}</p>
+                        <div class="prize-link-download">
+                            <mat-list *ngIf="successUpload">
+                                <mat-list-item *ngFor="let downloadLink of downloadLinks">
+                                    <a (click)="download(downloadLink.id)">hot {{downloadLink.id}}</a>
+                                </mat-list-item>
+                            </mat-list>
+                        </div>
+
+                        <form *ngIf="!successUpload" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+                            <input type="file" name="file" (change)="onFileSelect($event)" />
+                            <button type="submit">Upload</button>
+
+                        </form>
+                    </div>
                 </div>
-                <div class="success-upload" *ngIf="uploadResponse && uploadResponse.status === 'success'">
-                    <p>{{uploadResponse.message}}</p>
-                </div>
-
-                <div class="prize-link-download">
-                    <ul *ngIf="successUpload">
-                        <li *ngFor="let downloadLink of downloadLinks">
-                            <a (click)="download(downloadLink.id)">hot {{downloadLink.id}}</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <form *ngIf="!successUpload" [formGroup]="form" (ngSubmit)="onSubmit()">
-
-                    <input type="file" name="file" (change)="onFileSelect($event)" />
-                    <button type="submit">Upload</button>
-
-                </form>
             </div>
         </div>
-    </div>
-</div>
-<div class="result-action-button" mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">{{"result.stop-play" | translate}}</button>
-    <button mat-button (click)="onContinuePlay()">{{"result.continue-play" | translate}}</button>
-</div>
+    </mat-card-content>
+    <mat-card-actions>
+        <mat-action-list class="result-action-button" mat-dialog-actions>
+            <button mat-button (click)="onNoClick()">{{"result.stop-play" | translate}}</button>
+            <button mat-button (click)="onContinuePlay()">{{"result.continue-play" | translate}}</button>
+        </mat-action-list>
+    </mat-card-actions>
+</mat-card>

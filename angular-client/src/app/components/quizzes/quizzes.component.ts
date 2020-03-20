@@ -6,6 +6,7 @@ import {json} from "@angular-devkit/core";
 import {GlobalConstants} from "../../common/global-constants";
 import {UserAnswerQuizz} from "../../models/userAnswerQuizz";
 import {UserService} from "../../services/user.service";
+import {LoadingComponent} from "../share/loading/loading.component";
 
 @Component({
   selector: 'app-quizzes',
@@ -23,7 +24,7 @@ export class QuizzesComponent implements OnInit {
   constructor(
       private router: Router,
       private _quizzService: QuizzService,
-      private _userService: UserService
+      private _userService: UserService,
   ) { }
 
   ngOnInit() {

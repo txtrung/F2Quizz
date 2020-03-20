@@ -1,3 +1,7 @@
+mat-card {
+    box-shadow: unset !important;
+}
+
 .success-upload {
     color: green;
 }

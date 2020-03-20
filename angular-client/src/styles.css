@@ -45,4 +45,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   opacity: 0.5;
   z-index: 499999;
   position: absolute;
+  top: 0;
+  left: 0;
 }

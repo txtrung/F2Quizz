@@ -1,5 +1,4 @@
-<div class="overlay" *ngIf="loading"></div>
-<div class="main-content" [ngStyle]="{'background-image': 'url(/assets/imgs/loading2.svg)'}" *ngIf="loading"></div>
+<app-loading [loading]="loading"></app-loading>
 <div *ngIf="errorMsg"><h3>{{errorMsg}}</h3></div>
 <div *ngIf="quizz" class="middle-question-category">
     <span class="title">{{categoryTitle}}</span>
@@ -27,10 +26,10 @@
             </mat-card-content>
         </mat-card>
     </div>
-    <div class="content-button">
+    <mat-action-list class="content-button">
         <button *ngIf="questionsOrder !== 0" class="previous-question" mat-flat-button (click)="goPriviousQuestion()">{{"main-content.previous-button" | translate}}</button>
         <button *ngIf="questionsOrder != questions.length-1" class="next-question " mat-flat-button (click)="goNextQuestion()">{{"main-content.next-button" | translate}}</button>
         <button *ngIf="questionsOrder == questions.length-1" class="check-all-question " mat-flat-button (click)="checkAllQuestions()">{{"main-content.check-answer-button" | translate}}</button>
-    </div>
+    </mat-action-list>
 </div>
 
