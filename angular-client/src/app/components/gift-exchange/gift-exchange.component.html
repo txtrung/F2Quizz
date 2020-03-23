@@ -1,4 +1,4 @@
-<app-loading [loading]="!loading"></app-loading>
+<app-loading [loading]="loading"></app-loading>
 <mat-card>
     <mat-card-header>
         <mat-card-title>
@@ -16,10 +16,10 @@
                         <!--                </div>-->
 
                         <div class="mat-error" *ngIf="uploadResponse && (uploadResponse.status === 0 || uploadResponse.status === 'error')">
-                            <p>{{uploadResponse.message}}</p>
+                            <h2>{{uploadResponse.message}}</h2>
                         </div>
                         <div class="success-upload" *ngIf="uploadResponse && uploadResponse.status === 'success'">
-                            <p>{{uploadResponse.message}}</p>
+                            <h2>{{uploadResponse.message}}</h2>
                         </div>
 
                         <div class="prize-link-download">

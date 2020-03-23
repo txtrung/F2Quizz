@@ -48,3 +48,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   top: 0;
   left: 0;
 }
+
+mat-card-title h1 {
+  font-size: 200% !important;
+}

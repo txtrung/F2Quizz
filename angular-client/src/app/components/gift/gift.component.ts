@@ -3,6 +3,7 @@ import {GlobalConstants} from "../../common/global-constants";
 import {Router} from "@angular/router";
 import {MatDialogRef} from "@angular/material";
 import {DownloadService} from "../../services/download.service";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-gift',
@@ -16,7 +17,8 @@ export class GiftComponent implements OnInit {
   constructor(
       private router: Router,
       public dialogRef: MatDialogRef<GiftComponent>,
-      private _downloadService: DownloadService
+      private _downloadService: DownloadService,
+      private _userService: UserService
   ){
     dialogRef.disableClose = true;
   }
@@ -32,13 +34,18 @@ export class GiftComponent implements OnInit {
     },error => self.errorMsg = error);
   }
 
-  onNoClick(): void {
+  clearData(): void {
     this.dialogRef.close();
+    this._userService.removeUserAnswerQuizzInfo();
+  }
+
+  onNoClick(): void {
+    this.clearData();
     this.router.navigateByUrl(GlobalConstants.splash+GlobalConstants.quizzesUrl);
   }
 
   onContinuePlay(): void {
-    this.dialogRef.close();
+    this.clearData();
     this.router.navigateByUrl(GlobalConstants.splash+GlobalConstants.quizzesUrl);
   }
 

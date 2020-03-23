@@ -35,4 +35,8 @@ export class UserService {
   getUserAnswerQuizzInfo() {
     return this._sharedService.convertStringToJson(localStorage.getItem('userAnswerQuizzInfo'));
   }
+
+  removeUserAnswerQuizzInfo() {
+    localStorage.removeItem('userAnswerQuizzInfo');
+  }
 }

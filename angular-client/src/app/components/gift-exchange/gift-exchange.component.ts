@@ -6,6 +6,7 @@ import {HttpClient, HttpEventType } from "@angular/common/http";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {UploadService} from "../../services/upload.service";
 import {DownloadService} from "../../services/download.service";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-gift-exchange',
@@ -27,7 +28,8 @@ export class GiftExchangeComponent implements OnInit {
       public dialogRef: MatDialogRef<GiftExchangeComponent>,
       private http: HttpClient,
       private formBuilder: FormBuilder, private _uploadService: UploadService,
-      private _downloadService: DownloadService
+      private _downloadService: DownloadService,
+      private _userService: UserService
   ) {
     dialogRef.disableClose = true;
   }
@@ -100,14 +102,18 @@ export class GiftExchangeComponent implements OnInit {
   // }
   //
 
+  clearData(): void {
+    this.dialogRef.close();
+    this._userService.removeUserAnswerQuizzInfo();
+  }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.clearData();
     this.router.navigateByUrl(GlobalConstants.splash+GlobalConstants.quizzesUrl);
   }
 
   onContinuePlay(): void {
-    this.dialogRef.close();
+    this.clearData();
     this.router.navigateByUrl(GlobalConstants.splash+GlobalConstants.quizzesUrl);
   }
 }

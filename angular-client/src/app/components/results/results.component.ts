@@ -56,9 +56,13 @@ export class ResultsComponent implements OnInit {
     return check;
   }
 
-  onNoClick(): void {
+  clearData(): void {
     this.dialogRef.close();
     this._questionService.removeAnsweredData();
+  }
+
+  onNoClick(): void {
+    this.clearData();
     if (!this.checkIsWinner())
       this.router.navigateByUrl(GlobalConstants.splash+GlobalConstants.quizzesUrl);
     else
@@ -66,14 +70,12 @@ export class ResultsComponent implements OnInit {
   }
 
   onGetPrize(): void {
-    this.dialogRef.close();
-    this._questionService.removeAnsweredData();
+    this.clearData();
     this.openDialog(GiftExchangeComponent);
   }
 
   onContinuePlay(): void {
-    this.dialogRef.close();
-    this._questionService.removeAnsweredData();
+    this.clearData();
     this.router.navigateByUrl(GlobalConstants.splash+GlobalConstants.quizzesUrl, {state: {continuePlaying: true}});
   }
 
