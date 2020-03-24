@@ -40,7 +40,7 @@ class QuestionSearch extends Question
      */
     public function search($params)
     {
-        $query = Question::find()->with('category');
+        $query = Question::find()->with('category','answers','correctAnswers');
 
         // add conditions that should always apply here
 

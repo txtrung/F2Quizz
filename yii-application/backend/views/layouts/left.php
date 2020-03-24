@@ -25,7 +25,7 @@ use yii\bootstrap\Nav;
         <ul class="sidebar-menu tree" data-widget="tree">
             <li><a href="<?= \yii\helpers\Url::to(['/gii']) ?>"><span class="fa fa-file-code-o"></span> Gii</a>
             </li>
-            <li class="treeview">
+            <li class="treeview active">
                 <a href="#">
                     <i class="fa fa-ambulance"></i> <span>F2Quizz</span>
                     <i class="fa fa-angle-left pull-right"></i>

@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use backend\models\Question;
 use Yii;
 
 /**
@@ -11,7 +12,7 @@ use Yii;
  * @property int $question_id
  * @property string $right_answer
  *
- * @property Questions $question
+ * @property Question $question
  */
 class CorrectAnswer extends \yii\db\ActiveRecord
 {
@@ -32,7 +33,7 @@ class CorrectAnswer extends \yii\db\ActiveRecord
             [['question_id', 'right_answer'], 'required'],
             [['question_id'], 'integer'],
             [['right_answer'], 'string'],
-            [['question_id'], 'exist', 'skipOnError' => true, 'targetClass' => Questions::className(), 'targetAttribute' => ['question_id' => 'id']],
+            [['question_id'], 'exist', 'skipOnError' => true, 'targetClass' => Question::className(), 'targetAttribute' => ['question_id' => 'id']],
         ];
     }
 
@@ -55,6 +56,6 @@ class CorrectAnswer extends \yii\db\ActiveRecord
      */
     public function getQuestion()
     {
-        return $this->hasOne(Questions::className(), ['id' => 'question_id']);
+        return $this->hasOne(Question::className(), ['id' => 'question_id']);
     }
 }
