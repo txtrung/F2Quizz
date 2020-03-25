@@ -62,7 +62,7 @@ class QuestionController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
             'modelsAnswers' => $this->findModel($id)->answers,
-            'modelsCorrectAnswer' => ArrayHelper::toArray($this->findModel($id)->correctAnswers)[0]
+            'modelsCorrectAnswer' => $this->findModel($id)->correctAnswers ? ArrayHelper::toArray($this->findModel($id)->correctAnswers)[0] : []
         ]);
     }
 
@@ -142,89 +142,86 @@ class QuestionController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $modelsAnswers = $model->answers;
-        $modelsCorrectAnswer = $model->correctAnswers;
+        $modelsAnswers = (empty($model->answers)) ? [new Answer] : $model->answers;
+//        $modelsCorrectAnswer = $model->correctAnswers;
+        $modelsCorrectAnswer = (empty($model->correctAnswers)) ? new CorrectAnswer : $model->correctAnswers[0] ;
 
 //        var_dump($modelsCorrectAnswer);
-//        die();
 
+        var_dump(Yii::$app->request->post());
+//die();
         if ($model->load(Yii::$app->request->post())) {
-            var_dump('0');
-            $oldIDs = ArrayHelper::map($modelsAnswers, 'id', 'id');
-            $modelsAnswers = Model::createMultiple(Answer::classname(), $modelsAnswers);
-            Model::loadMultiple($modelsAnswers, Yii::$app->request->post());
-            $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($modelsAnswers, 'id', 'id')));
 
-            $oldCorrectAnswerIDs = ArrayHelper::map($modelsCorrectAnswer, 'id', 'id');
-            var_dump($oldCorrectAnswerIDs);
-            $deletedCorrectAnswerIDs = array_diff($oldCorrectAnswerIDs, array_filter(ArrayHelper::map($modelsCorrectAnswer, 'id', 'id')));
-            var_dump($deletedCorrectAnswerIDs);
-            var_dump('1');
-            // ajax validation
-            if (Yii::$app->request->isAjax) {
-                Yii::$app->response->format = Response::FORMAT_JSON;
-                return ArrayHelper::merge(
-                    ActiveForm::validateMultiple($modelsAnswers),
-                    ActiveForm::validate($model)
-                );
-            }
-
-            // validate all models
-            $valid = $model->validate();
-            $valid = Model::validateMultiple($modelsAnswers,['content']) && $valid;
-
-            if ($valid) {
-                var_dump('2');
-                $transaction = \Yii::$app->db->beginTransaction();
-                try {
-                    if ($flag = $model->save(false)) {
-                        var_dump('3');
-                        if (! empty($deletedIDs)) {
-                            Answer::deleteAll(['id' => $deletedIDs]);
-                        }
-                        foreach ($modelsAnswers as $modelAnswers) {
-                            $modelAnswers->question_id = $model->id;
-                            if (! ($flag = $modelAnswers->save(false))) {
-                                $transaction->rollBack();
-                                break;
-                            }
-                        }
-                        var_dump('4');
-                        var_dump($deletedCorrectAnswerIDs);
-                        if (! empty($deletedCorrectAnswerIDs)) {
-                            CorrectAnswer::deleteAll(['id' => $deletedCorrectAnswerIDs]);
-                        }
-
-                        var_dump('4.1');
-
-                        var_dump($modelsCorrectAnswer->question_id);
-                        $modelsCorrectAnswer->question_id = $model->id;
-                        var_dump('4.2');
-                        $modelsCorrectAnswer->right_answer = Yii::$app->request->post($modelsCorrectAnswer->formName())['right_answer'];
-                        var_dump('4.3');
-                        if (! ($flag = $modelsCorrectAnswer->save(false))) {
-                            $transaction->rollBack();
-                        }
-                        var_dump($flag);
-                        var_dump('5');
-                    }
-                    if ($flag) {
-                        var_dump('6');
-                        die();
-                        $transaction->commit();
-                        return $this->redirect(['view', 'id' => $model->id]);
-                    }
-                } catch (Exception $e) {
-                    $transaction->rollBack();
+            $answersData = Yii::$app->request->post((new Answer())->formName());
+            $deletedIDs = [];
+            if ($answersData) {
+                foreach ($modelsAnswers as $data) {
+                    array_push($deletedIDs,$data['id']);
+                }
+//                var_dump($deletedIDs);
+                $multipleAnswerModel = [];
+                foreach ($answersData as $index => $answerData) {
+                    $tmpAnswerModel = new Answer();
+                    $tmpAnswerModel->question_id = $model->id;
+                    $tmpAnswerModel->content = $answerData['content'];
+                    $tmpAnswerModel->tag = $index+1;
+                    $multipleAnswerModel[] = $tmpAnswerModel;
                 }
             }
 
-            var_dump('7');
-            die();
+            $correctAnswerData = Yii::$app->request->post((new CorrectAnswer())->formName());
+
+//var_dump($correctAnswerData);
+//            die();
+//            var_dump($deletedCorrectAnswerIDs);
+//            var_dump($modelsCorrectAnswer);
+//            die();
+
+            // validate all models
+            $valid = $model->validate();
+            $valid = Model::validateMultiple($multipleAnswerModel,['content']) && $valid;
+
+            if ($valid) {
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    if ($flag = $model->save(false)) {
+                        if (! empty($deletedIDs)) {
+                            Answer::deleteAll(['id' => $deletedIDs]);
+                            foreach ($multipleAnswerModel as $item) {
+                                if (! ($flag = $item->save(false))) {
+                                    $transaction->rollBack();
+                                    break;
+                                }
+                            }
+
+                            var_dump($correctAnswerData['right_answer']);
+//                            var_dump(empty($correctAnswerData['right_answer']));
+//                            die();
+//                            if (!empty($correctAnswerData['right_answer'])) {
+                                $modelsCorrectAnswer->question_id = $model->id;
+                                $modelsCorrectAnswer->right_answer = $correctAnswerData['right_answer'];
+                                if (! ($flag = $modelsCorrectAnswer->save(false))) {
+                                    $transaction->rollBack();
+                                }
+//                            }
+                        } else {
+                            Answer::deleteAll(['question_id' => $model->id]);
+                            CorrectAnswer::deleteAll(['question_id' => $model->id]);
+                        }
+                    }
+                    if ($flag) {
+                        $transaction->commit();
+die();
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
+                } catch (Exception $e) {
+//                    var_dump($e->getMessage());die();
+                    $transaction->rollBack();
+                }
+            }
+//die();
             return $this->redirect(['view', 'id' => $model->id]);
         }
-
-        var_dump('8');
 
         return $this->render('update', [
             'model' => $model,

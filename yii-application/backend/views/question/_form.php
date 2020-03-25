@@ -47,7 +47,7 @@ use yii\widgets\ActiveForm;
 
             <div class="container-items"><!-- widgetContainer -->
                 <?php
-                    $tmpCorrectAnswerModel = count(ArrayHelper::toArray($model)) <= 0 ? new CorrectAnswer : $model->correctAnswers[0];
+                    $tmpCorrectAnswerModel = count(ArrayHelper::toArray($model)) <= 0 ? new CorrectAnswer : ($model->correctAnswers ? $model->correctAnswers[0] : new CorrectAnswer);
                     foreach ($modelsAnswers as $i => $modelAnswers):
                 ?>
                     <div class="item panel panel-default"><!-- widgetBody -->
@@ -65,15 +65,20 @@ use yii\widgets\ActiveForm;
                             if (! $modelAnswers->isNewRecord) {
                                 echo Html::activeHiddenInput($modelAnswers, "[{$i}]id");
                             }
+                            var_dump($tmpCorrectAnswerModel->right_answer);
+                            var_dump($modelAnswers->tag);
+                            var_dump($tmpCorrectAnswerModel->right_answer === $modelAnswers->tag);
                             ?>
                             <div class="row">
                                 <div class="col-sm-4">
                                     <?= $form->field($modelAnswers, "[{$i}]content")->textInput(['maxlength' => true]) ?>
                                 </div>
                                 <div class="col-sm-4">
-                                    <?= $form->field($tmpCorrectAnswerModel, "[{$i}]right_answer")->radio(
+                                    <?= $form->field($tmpCorrectAnswerModel, "right_answer")->radio(
                                             array(
-                                                    'checked'=> $tmpCorrectAnswerModel->right_answer == $modelAnswers->tag
+                                                    'checked'=> $modelAnswers->isNewRecord ? false : $tmpCorrectAnswerModel->right_answer === $modelAnswers->tag,
+                                                    'class' => 'right_answer_checkbox',
+                                                    'value' => $modelAnswers->isNewRecord ? 0 : $modelAnswers->tag
                                             )
                                     ) ?>
                                 </div>
@@ -86,6 +91,44 @@ use yii\widgets\ActiveForm;
         </div>
     </div>
 
+<?php
+    $js = '
+        $(document).ready(function(){
+            let all = $(".dynamicform_wrapper").find(".right_answer_checkbox");
+            all.each(function() {
+                let index = all.index(this);
+                all.eq(index).val(index+1);
+            });
+            all.each(function() {
+                let index = all.index(this);
+                console.log(all.eq(index).val());
+                console.log(all.eq(index));
+            });
+        });
+        $(".dynamicform_wrapper").on("afterInsert", function (e, item) {
+            let preAll = $(item).prevAll();
+            $(item).find(".right_answer_checkbox").val(preAll.length+1);
+        });
+        $(".dynamicform_wrapper").on("afterDelete", function (e, item) {
+            let preAll = $(item).nextAll();
+            preAll.each(function() {
+                let index = all.index(this);
+                all.eq(index).val(index-1);
+            });
+        });
+        $(document).ready(function () {
+            $("input[type=radio][class=right_answer_checkbox]").change(function() {
+//                this.val();
+console.log($(".dynamicform_wrapper").find(this));
+                $(".dynamicform_wrapper").find(this).prop("checked", true);
+                $(".dynamicform_wrapper").find(this).checked = true;
+                console.log(this);
+            });
+        });
+    ';
+
+    $this->registerJs($js);
+?>
 
     <div class="form-group">
         <?= Html::submitButton($modelAnswers->isNewRecord ? Yii::t('app', 'Save') : Yii::t('app', 'Update'), ['class' => 'btn btn-success']) ?>

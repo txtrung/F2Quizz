@@ -31,8 +31,8 @@ class Answer extends \yii\db\ActiveRecord
     {
         return [
             [['content', 'question_id', 'tag'], 'required'],
-            [['content'], 'string'],
-            [['question_id', 'tag'], 'integer'],
+            [['content', 'tag'], 'string'],
+            [['question_id'], 'integer'],
             [['question_id'], 'exist', 'skipOnError' => true, 'targetClass' => Question::className(), 'targetAttribute' => ['question_id' => 'id']],
         ];
     }

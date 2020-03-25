@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <?= $modelAnswers->content ?>
                                 </div>
                                 <div class="col-sm-4">
-                                    <?php if ($modelsCorrectAnswer['right_answer'] == $modelAnswers->tag): ?>
+                                    <?php if ($modelsCorrectAnswer && ($modelsCorrectAnswer['right_answer'] == $modelAnswers->tag)): ?>
                                         <input type="radio" name="right_answer" checked disabled/>
                                     <?php endif; ?>
                                 </div>
