@@ -143,13 +143,8 @@ class QuestionController extends Controller
     {
         $model = $this->findModel($id);
         $modelsAnswers = (empty($model->answers)) ? [new Answer] : $model->answers;
-//        $modelsCorrectAnswer = $model->correctAnswers;
         $modelsCorrectAnswer = (empty($model->correctAnswers)) ? new CorrectAnswer : $model->correctAnswers[0] ;
 
-//        var_dump($modelsCorrectAnswer);
-
-        var_dump(Yii::$app->request->post());
-//die();
         if ($model->load(Yii::$app->request->post())) {
 
             $answersData = Yii::$app->request->post((new Answer())->formName());
@@ -158,7 +153,6 @@ class QuestionController extends Controller
                 foreach ($modelsAnswers as $data) {
                     array_push($deletedIDs,$data['id']);
                 }
-//                var_dump($deletedIDs);
                 $multipleAnswerModel = [];
                 foreach ($answersData as $index => $answerData) {
                     $tmpAnswerModel = new Answer();
@@ -170,12 +164,6 @@ class QuestionController extends Controller
             }
 
             $correctAnswerData = Yii::$app->request->post((new CorrectAnswer())->formName());
-
-//var_dump($correctAnswerData);
-//            die();
-//            var_dump($deletedCorrectAnswerIDs);
-//            var_dump($modelsCorrectAnswer);
-//            die();
 
             // validate all models
             $valid = $model->validate();
@@ -194,9 +182,6 @@ class QuestionController extends Controller
                                 }
                             }
 
-                            var_dump($correctAnswerData['right_answer']);
-//                            var_dump(empty($correctAnswerData['right_answer']));
-//                            die();
 //                            if (!empty($correctAnswerData['right_answer'])) {
                                 $modelsCorrectAnswer->question_id = $model->id;
                                 $modelsCorrectAnswer->right_answer = $correctAnswerData['right_answer'];
@@ -211,15 +196,12 @@ class QuestionController extends Controller
                     }
                     if ($flag) {
                         $transaction->commit();
-die();
                         return $this->redirect(['view', 'id' => $model->id]);
                     }
                 } catch (Exception $e) {
-//                    var_dump($e->getMessage());die();
                     $transaction->rollBack();
                 }
             }
-//die();
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

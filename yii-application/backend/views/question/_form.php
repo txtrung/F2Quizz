@@ -12,6 +12,9 @@ use yii\widgets\ActiveForm;
 /* @var $modelsAnswers backend\models\Answer */
 /* @var $modelsCorrectAnswer backend\models\CorrectAnswer */
 
+$tmpCorrectAnswerModel = count(ArrayHelper::toArray($model)) <= 0 ? new CorrectAnswer : ($model->correctAnswers ? $model->correctAnswers[0] : new CorrectAnswer);
+$modelsCorrectAnswerString =json_encode(ArrayHelper::toArray($tmpCorrectAnswerModel));
+
 ?>
 
 <div class="question-form">
@@ -47,7 +50,7 @@ use yii\widgets\ActiveForm;
 
             <div class="container-items"><!-- widgetContainer -->
                 <?php
-                    $tmpCorrectAnswerModel = count(ArrayHelper::toArray($model)) <= 0 ? new CorrectAnswer : ($model->correctAnswers ? $model->correctAnswers[0] : new CorrectAnswer);
+//                    $tmpCorrectAnswerModel = count(ArrayHelper::toArray($model)) <= 0 ? new CorrectAnswer : ($model->correctAnswers ? $model->correctAnswers[0] : new CorrectAnswer);
                     foreach ($modelsAnswers as $i => $modelAnswers):
                 ?>
                     <div class="item panel panel-default"><!-- widgetBody -->
@@ -60,21 +63,16 @@ use yii\widgets\ActiveForm;
                             <div class="clearfix"></div>
                         </div>
                         <div class="panel-body">
-                            <?php
-                            // necessary for update action.
-                            if (! $modelAnswers->isNewRecord) {
-                                echo Html::activeHiddenInput($modelAnswers, "[{$i}]id");
-                            }
-                            var_dump($tmpCorrectAnswerModel->right_answer);
-                            var_dump($modelAnswers->tag);
-                            var_dump($tmpCorrectAnswerModel->right_answer === $modelAnswers->tag);
-                            ?>
                             <div class="row">
                                 <div class="col-sm-4">
                                     <?= $form->field($modelAnswers, "[{$i}]content")->textInput(['maxlength' => true]) ?>
                                 </div>
                                 <div class="col-sm-4">
-                                    <?= $form->field($tmpCorrectAnswerModel, "right_answer")->radio(
+                                    <?= $form->field($tmpCorrectAnswerModel, "right_answer", [
+                                            'options' => [
+                                                'onchange' => "addChecked(event)"
+                                            ]
+                                    ])->radio(
                                             array(
                                                     'checked'=> $modelAnswers->isNewRecord ? false : $tmpCorrectAnswerModel->right_answer === $modelAnswers->tag,
                                                     'class' => 'right_answer_checkbox',
@@ -82,6 +80,13 @@ use yii\widgets\ActiveForm;
                                             )
                                     ) ?>
                                 </div>
+                                <?php
+                                    // necessary for update action.
+//                                    if (! $modelAnswers->isNewRecord) {
+//                                        echo Html::activeHiddenInput($modelAnswers, "[{$i}]id", ['class' => 'hidden_right_answer_checkbox']
+//                                        );
+//                                    }
+                                ?>
                             </div>
                         </div>
                     </div>
@@ -90,45 +95,44 @@ use yii\widgets\ActiveForm;
             <?php DynamicFormWidget::end(); ?>
         </div>
     </div>
-
-<?php
-    $js = '
-        $(document).ready(function(){
+<script>
+    var correctAnswer = <?php echo $modelsCorrectAnswerString; ?>;
+    function addChecked(event) {
+        let value = event.target.value;
+        correctAnswer.correctAnswer = value;
+        $('input[type=hidden][name="CorrectAnswer[right_answer]"]').each(function() {
+            $(this).val(value);
+        });
+    };
+    window.onload = function() {
+        function setHiddenInputValue() {
+            let allHiden = $('input[type=hidden][name="CorrectAnswer[right_answer]"]');
+            allHiden.each(function() {
+                $(this).val(correctAnswer.right_answer);
+            });
+        };
+        $(document).ready(function () {
             let all = $(".dynamicform_wrapper").find(".right_answer_checkbox");
-            all.each(function() {
+            all.each(function () {
                 let index = all.index(this);
-                all.eq(index).val(index+1);
+                all.eq(index).val(index + 1);
             });
-            all.each(function() {
-                let index = all.index(this);
-                console.log(all.eq(index).val());
-                console.log(all.eq(index));
-            });
+            setHiddenInputValue();
         });
         $(".dynamicform_wrapper").on("afterInsert", function (e, item) {
             let preAll = $(item).prevAll();
-            $(item).find(".right_answer_checkbox").val(preAll.length+1);
+            $(item).find(".right_answer_checkbox").val(preAll.length + 1);
+            setHiddenInputValue();
         });
         $(".dynamicform_wrapper").on("afterDelete", function (e, item) {
             let preAll = $(item).nextAll();
-            preAll.each(function() {
+            preAll.each(function () {
                 let index = all.index(this);
-                all.eq(index).val(index-1);
+                all.eq(index).val(index - 1);
             });
         });
-        $(document).ready(function () {
-            $("input[type=radio][class=right_answer_checkbox]").change(function() {
-//                this.val();
-console.log($(".dynamicform_wrapper").find(this));
-                $(".dynamicform_wrapper").find(this).prop("checked", true);
-                $(".dynamicform_wrapper").find(this).checked = true;
-                console.log(this);
-            });
-        });
-    ';
-
-    $this->registerJs($js);
-?>
+    };
+</script>
 
     <div class="form-group">
         <?= Html::submitButton($modelAnswers->isNewRecord ? Yii::t('app', 'Save') : Yii::t('app', 'Update'), ['class' => 'btn btn-success']) ?>

@@ -5,7 +5,8 @@
   "header": {
     "login": "Đăng nhập",
     "logout": "Đăng xuất",
-    "new": "Chơi gì thì chơi"
+    "new": "Chơi gì thì chơi",
+    "register": "Đăng ký"
   },
   "main-content": {
     "previous-button": "Cho coi lại câu trước",

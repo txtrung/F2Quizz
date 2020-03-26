@@ -8,7 +8,7 @@
         </a>
         <span class="example-spacer"></span>
         <button class="play-new" mat-flat-button>{{ 'header.new' | translate}}</button>
-        <button class="login" mat-flat-button>{{ 'header.login' | translate}}</button>
-        <button class="logout" mat-flat-button>{{ 'header.logout' | translate}}</button>
+        <a routerLink="/login" routerLinkActive="active" class="login" mat-flat-button>{{ 'header.login' | translate}}</a>
+        <a routerLink="/register" routerLinkActive="active" class="register" mat-flat-button>{{ 'header.register' | translate}}</a>
     </mat-toolbar-row>
 </mat-toolbar>

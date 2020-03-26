@@ -21,7 +21,7 @@ mat-toolbar {
     font-weight: 900;
 }
 
-.play-new, .login, .logout{
+.play-new, .login, .logout, .register{
     background: unset;
     font-weight: 900;
 }

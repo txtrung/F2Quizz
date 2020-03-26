@@ -13,7 +13,7 @@ import {
     MatIconModule,
     MatRadioModule,
     MatToolbarModule,
-    MatInputModule, MatListModule
+    MatInputModule, MatListModule, MatSelectModule
 } from "@angular/material";
 import { MasterPageComponent } from './components/master-page/master-page.component';
 import { QuizzesComponent } from './components/quizzes/quizzes.component';
@@ -31,6 +31,9 @@ import { GiftExchangeComponent } from './components/gift-exchange/gift-exchange.
 import {DownloadService} from "./services/download.service";
 import { HttpModule } from '@angular/http';
 import { LoadingComponent } from './components/share/loading/loading.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 // required for AOT compilation
 export function HttpLoaderFactory(http: HttpClient) {
@@ -48,6 +51,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     GiftComponent,
     GiftExchangeComponent,
     LoadingComponent,
+    LoginComponent,
+    RegisterComponent,
   ],
     entryComponents: [
         ResultsComponent,
@@ -82,6 +87,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         MatInputModule,
         ReactiveFormsModule,
         MatListModule,
+        FlexLayoutModule,
+        MatSelectModule
     ],
   providers: [
     QuizzService,
