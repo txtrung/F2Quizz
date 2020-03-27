@@ -2,21 +2,40 @@
 
     <mat-card class="box">
         <mat-card-header>
-            <mat-card-title>Log in</mat-card-title>
+            <mat-card-title>{{ 'global.login' | translate}}</mat-card-title>
         </mat-card-header>
 
-        <form class="example-form">
-            <mat-card-content>
-                <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Username">
-                </mat-form-field>
+        <mat-card-content>
+            <form class="example-form">
+                    <mat-form-field class="example-full-width">
+                        <input matInput placeholder="{{ 'global.username' | translate }}" />
+                    </mat-form-field>
 
-                <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Password">
-                </mat-form-field>
-            </mat-card-content>
-            <button mat-button color="accent" class="btn-block">Log in</button>
-        </form>
+                    <mat-form-field class="example-full-width">
+                        <input matInput placeholder="{{ 'global.password' | translate }}" />
+                    </mat-form-field>
+                <button mat-button class="btn-block">{{ 'global.login' | translate}}</button>
+            </form>
+        </mat-card-content>
+
+        <mat-card-footer>
+            <mat-card-actions>
+                <mat-action-list class="login-action-button">
+                    <p class="other-login-title">{{ "login.other-login" | translate }}</p>
+                    <button mat-icon-button (click)="loginFshare()">
+                        <mat-icon svgIcon="icon_fshare"></mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="loginFacebook()">
+                        <mat-icon svgIcon="icon_facebook"></mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="loginGoogle()" >
+                        <mat-icon svgIcon="icon_google"></mat-icon>
+                    </button>
+                    <p class="register-title">{{ "login.new-account" | translate }}</p>
+                    <a routerLink="/register" routerLinkActive="active" class="register-button" mat-flat-button>{{ 'global.register' | translate}}</a>
+                </mat-action-list>
+            </mat-card-actions>
+        </mat-card-footer>
     </mat-card>
 
 </div>

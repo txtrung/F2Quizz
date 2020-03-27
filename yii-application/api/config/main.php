@@ -85,6 +85,14 @@ return [
                         'POST post-upload-file' => 'post-upload-file',
                     ],
                 ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'v1/users',
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'POST login' => 'login'
+                    ],
+                ]
             ],
         ],
         'request' => [

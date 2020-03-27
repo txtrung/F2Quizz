@@ -1,12 +1,15 @@
 {
   "global": {
-    "app-name": "F2Quizz"
+    "app-name": "F2Quizz",
+    "login": "Đăng nhập",
+    "register": "Đăng ký",
+    "logout": "Đăng xuất",
+    "username": "Tên đăng nhập",
+    "password": "Mật khẩu",
+    "email": "email"
   },
   "header": {
-    "login": "Đăng nhập",
-    "logout": "Đăng xuất",
-    "new": "Chơi gì thì chơi",
-    "register": "Đăng ký"
+    "new": "Chơi gì thì chơi"
   },
   "main-content": {
     "previous-button": "Cho coi lại câu trước",
@@ -24,5 +27,15 @@
     "download-prize-content": "Bạn nhận được 1 video hot",
     "exchange-prize": "Trao đổi quà",
     "exchange-prize-content": "Bạn nhận được 2 video hot khi tải lên 1 file bất kỳ"
+  },
+  "login": {
+    "fshare": "fshare",
+    "facebook": "facebook",
+    "google": "google",
+    "other-login": "hoặc đăng nhập với",
+    "new-account": "bạn chưa có tài khoản ?"
+  },
+  "register": {
+
   }
 }

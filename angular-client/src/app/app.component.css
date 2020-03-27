@@ -27,10 +27,6 @@ nav a.active {
     color: #039be5;
 }
 
-html, body {
-    height: 100%;
-}
-
 .root-page {
     height: 100%;
 }
