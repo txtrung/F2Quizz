@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
+import {UserService} from "./services/user.service";
+import {User} from "./models/user";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -7,7 +10,15 @@ import {TranslateService} from '@ngx-translate/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private translate: TranslateService) {
+
+  currentUser: User;
+
+  constructor(
+      private translate: TranslateService,
+      private router: Router,
+      private authenticationService: UserService
+
+  ) {
     translate.addLangs(['vi']);
     // @ts-ignore
     if (localStorage.getItem('locale')) {
@@ -19,5 +30,6 @@ export class AppComponent {
       localStorage.setItem('locale', 'vi');
       translate.setDefaultLang('vi');
     }
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
 }

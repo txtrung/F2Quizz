@@ -19,8 +19,10 @@ return [
     ],
     'components' => [
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => 'api\modules\models\Users',
             'enableAutoLogin' => false,
+            'enableSession'=>false,
+            //'identityCookie' => ['name' => '_identity-api', 'httpOnly' => true],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -90,13 +92,17 @@ return [
                     'controller' => 'v1/users',
                     'pluralize' => false,
                     'extraPatterns' => [
-                        'POST login' => 'login'
+                        'GET test'=>'test',
+                        'POST authenticate' => 'authenticate',
+                        'POST register' => 'register'
                     ],
                 ]
             ],
         ],
         'request' => [
             'parsers' =>['application/json' => 'yii\web\JsonParser', ],
+            'enableCookieValidation' => false,
+            'enableCsrfValidation' => false,
         ]
     ],
     'params' => $params,

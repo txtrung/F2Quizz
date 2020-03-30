@@ -21,7 +21,7 @@ import { AppBarHeaderComponent } from './components/app-bar-header/app-bar-heade
 import {MatButtonModule} from '@angular/material/button';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
-import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
 import { QuestionsComponent } from './components/questions/questions.component';
 import { ResultsComponent } from './components/results/results.component';
 import {QuizzService} from "./services/quizz.service";
@@ -34,6 +34,12 @@ import { LoadingComponent } from './components/share/loading/loading.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { AlertComponent } from './components/share/alert/alert.component';
+
+// used to create fake backend
+import { fakeBackendProvider } from './helpers/fake-backend';
+import { JwtInterceptor } from './helpers/jwt.interceptor';
+import { ErrorInterceptor } from './helpers/error.interceptor';
 
 // required for AOT compilation
 export function HttpLoaderFactory(http: HttpClient) {
@@ -53,6 +59,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoadingComponent,
     LoginComponent,
     RegisterComponent,
+    AlertComponent,
   ],
     entryComponents: [
         ResultsComponent,
@@ -94,7 +101,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     QuizzService,
     QuestionService,
     DownloadService,
-    LoadingComponent
+    LoadingComponent,
+  // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+  { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+
+  // provider used to create fake backend
+  // fakeBackendProvider
   ],
   bootstrap: [AppComponent]
 })

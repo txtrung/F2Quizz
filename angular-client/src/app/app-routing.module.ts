@@ -5,9 +5,10 @@ import {MasterPageComponent} from "./components/master-page/master-page.componen
 import {GlobalConstants} from "./common/global-constants";
 import {LoginComponent} from './components/login/login.component';
 import {RegisterComponent} from "./components/register/register.component";
+import {AuthGuard} from "./helpers/auth.guard";
 
 const routes: Routes = [
-  { path: '', redirectTo: '/quizzes', pathMatch: 'full' },
+  { path: '', redirectTo: '/quizzes', pathMatch: 'full', canActivate: [AuthGuard] },
   { path: GlobalConstants.quizzesUrl, component: MasterPageComponent},
   { path: GlobalConstants.questionsUrl, component: MasterPageComponent},
   { path: 'login', component: LoginComponent },
