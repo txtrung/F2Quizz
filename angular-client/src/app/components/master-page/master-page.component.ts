@@ -32,21 +32,6 @@ export class MasterPageComponent implements OnInit {
     if (this.route.snapshot.url[0].path === GlobalConstants.questionsUrl) {
       this.setLocationValue(false,true);
     }
-    this.loadAllUsers();
-  }
-
-  deleteUser(id: number) {
-    this.userService.delete(id)
-        .pipe(first())
-        .subscribe(() => this.loadAllUsers());
-  }
-
-  private loadAllUsers() {
-    if (this.currentUser) {
-      this.userService.getAll()
-          .pipe(first())
-          .subscribe(users => this.users = users);
-    }
   }
 
   setLocationValue(quizz,questions): void {

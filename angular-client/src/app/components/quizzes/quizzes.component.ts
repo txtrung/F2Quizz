@@ -7,6 +7,7 @@ import {GlobalConstants} from "../../common/global-constants";
 import {UserAnswerQuizz} from "../../models/userAnswerQuizz";
 import {UserService} from "../../services/user.service";
 import {LoadingComponent} from "../share/loading/loading.component";
+import {AlertService} from "../../services/alert.service";
 
 @Component({
   selector: 'app-quizzes',
@@ -25,6 +26,7 @@ export class QuizzesComponent implements OnInit {
       private router: Router,
       private _quizzService: QuizzService,
       private _userService: UserService,
+      private alertService: AlertService
   ) { }
 
   ngOnInit() {
@@ -48,7 +50,11 @@ export class QuizzesComponent implements OnInit {
       } else {
 
       }
-    },error => self.errorMsg = error);
+    },error => {
+      this.alertService.error(GlobalConstants.serverError);
+      self.loading = false;
+      // self.errorMsg = error
+    });
   }
 
   goToQuestionsPage(quizz): void {

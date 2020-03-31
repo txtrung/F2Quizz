@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../services/user.service";
 import {AlertService} from 'src/app/services/alert.service';
 import {first} from "rxjs/operators";
+import {GlobalConstants} from "../../common/global-constants";
 
 @Component({
   selector: 'app-login',
@@ -79,13 +80,18 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
-
     this.loading = true;
     this.authenticationService.login(formData)
         .pipe(first())
         .subscribe(
             data => {
-              this.router.navigate([this.returnUrl]);
+              if (GlobalConstants.success === data.status) {
+                this.router.navigate([this.returnUrl]);
+              }
+              if (GlobalConstants.error === data.status) {
+                this.alertService.error(data.message);
+                this.loading = false;
+              }
             },
             error => {
               this.alertService.error(error);

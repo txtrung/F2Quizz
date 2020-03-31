@@ -1,5 +1,6 @@
 <app-loading [loading]="loading"></app-loading>
-<div *ngIf="errorMsg"><h3>{{errorMsg}}</h3></div>
+<!--<div *ngIf="errorMsg"><h3>{{errorMsg}}</h3></div>-->
+<app-alert></app-alert>
 <div *ngIf="quizz" class="middle-question-category">
     <span class="title">{{categoryTitle}}</span>
     <span class="description">{{categoryDescription}}</span>

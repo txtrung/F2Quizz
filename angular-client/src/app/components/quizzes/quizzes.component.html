@@ -1,5 +1,6 @@
 <app-loading [loading]="loading"></app-loading>
-<div *ngIf="errorMsg"><h3>{{errorMsg}}</h3></div>
+<!--<div *ngIf="errorMsg"><h3>{{errorMsg}}</h3></div>-->
+<app-alert></app-alert>
 <div *ngIf="quizzes">
     <mat-list class="quizzes">
         <mat-list-item *ngFor="let quizz of quizzes">

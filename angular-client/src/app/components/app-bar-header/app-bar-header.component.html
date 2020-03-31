@@ -8,15 +8,10 @@
         </a>
         <span class="example-spacer"></span>
         <button class="play-new" mat-flat-button>{{ 'header.new' | translate}}</button>
-
-        <nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
-            <div class="navbar-nav">
-                <a class="nav-item nav-link" routerLink="/">Home</a>
-                <a class="nav-item nav-link" (click)="logout()">Logout</a>
-            </div>
-        </nav>
-
-        <a routerLink="/login" routerLinkActive="active" class="login" mat-flat-button>{{ 'global.login' | translate}}</a>
-        <a routerLink="/register" routerLinkActive="active" class="register" mat-flat-button>{{ 'global.register' | translate}}</a>
+        <div *ngIf="!currentUser">
+            <a routerLink="/login" routerLinkActive="active" class="login" mat-flat-button>{{ 'global.login' | translate}}</a>
+            <a routerLink="/register" routerLinkActive="active" class="register" mat-flat-button>{{ 'global.register' | translate}}</a>
+        </div>
+        <a *ngIf="currentUser" routerLinkActive="active" class="logout" mat-flat-button (click)="logout()">{{ 'global.logout' | translate}}</a>
     </mat-toolbar-row>
 </mat-toolbar>

@@ -1,3 +1,4 @@
+<app-loading [loading]="loading"></app-loading>
 <div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
     <mat-card class="box">
         <mat-card-header>
@@ -22,6 +23,7 @@
                         </div>
                     </mat-form-field>
                 </div>
+                <app-alert></app-alert>
                 <div class="form-group">
                     <button mat-button class="btn-block">{{ 'global.login' | translate}}</button>
                 </div>

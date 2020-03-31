@@ -29,13 +29,18 @@ export class UserService {
     return this.currentUserSubject.value;
   }
 
-  login(data) {
+    login(data) {
     return this.http.post<any>(`${GlobalConstants.serverURL + this._authenticateApi}`, data)
-        .pipe(map(user => {
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          this.currentUserSubject.next(user);
-          return user;
+        .pipe(map(data => {
+          if (data.status === GlobalConstants.success) {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            localStorage.setItem('currentUser', JSON.stringify(data.access_token));
+            this.currentUserSubject.next(data.access_token);
+          }
+          // if (data.status === GlobalConstants.error) {
+          //
+          // }
+          return data;
         }));
   }
 
@@ -45,16 +50,8 @@ export class UserService {
     this.currentUserSubject.next(null);
   }
 
-  getAll() {
-    return this.http.get<User[]>(`${GlobalConstants.localURL}/users`);
-  }
-
   register(data) {
     return this.http.post(`${GlobalConstants.serverURL + this._registerApi}`, data);
-  }
-
-  delete(id: number) {
-    return this.http.delete(`${GlobalConstants.localURL}/users/${id}`);
   }
 
   setUserAnswerQuizzInfo(info): void {

@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {MatDialogRef} from "@angular/material";
 import {DownloadService} from "../../services/download.service";
 import {UserService} from "../../services/user.service";
+import {AlertService} from "../../services/alert.service";
 
 @Component({
   selector: 'app-gift',
@@ -18,7 +19,8 @@ export class GiftComponent implements OnInit {
       private router: Router,
       public dialogRef: MatDialogRef<GiftComponent>,
       private _downloadService: DownloadService,
-      private _userService: UserService
+      private _userService: UserService,
+      private alertService: AlertService
   ){
     dialogRef.disableClose = true;
   }
@@ -31,7 +33,11 @@ export class GiftComponent implements OnInit {
     this._downloadService.downloadFile().subscribe(response => {
       window.location.href = response.url;
       self.errorMsg = '';
-    },error => self.errorMsg = error);
+    },error => {
+      this.alertService.error(error);
+      // this.loading = false;
+      // self.errorMsg = error
+    });
   }
 
   clearData(): void {

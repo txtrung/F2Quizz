@@ -35,20 +35,22 @@ class UsersController extends ActiveController
     }
 
     public function actionAuthenticate() {
-//        var_dump(json_decode(\Yii::$app->getRequest()->post()["authenticate"]));
-//        var_dump(ArrayHelper::toArray(json_decode(\Yii::$app->getRequest()->post()["authenticate"])));
-//        die();
         if($_POST && count($_POST)) {
             $model = new LoginForm();
             if ($model->load(ArrayHelper::toArray(json_decode(\Yii::$app->getRequest()->post()["authenticate"])), '') && $model->login()) {
                 return [
+                    'status'=>'success',
                     'access_token' => $model->login(),
                 ];
-            } else {
-                return $model->getFirstErrors();
             }
+//            else {
+//                return $model->getFirstErrors();
+//            }
         }
-        return ['status'=>'error'];
+        return [
+            'status'=>'error',
+            'message'=>'Incorrect username or password.'
+        ];
     }
 
     /**
@@ -61,10 +63,14 @@ class UsersController extends ActiveController
             $model = new SignupForm();
             if ($model->load(ArrayHelper::toArray(json_decode(\Yii::$app->getRequest()->post()["register"])),'') && $model->signup()) {
                 return ['status'=>'success'];
-            } else {
-                return $model->getFirstErrors();
             }
+//            else {
+//                return $model->getFirstErrors();
+//            }
         }
-        return ['status'=>'error'];
+        return [
+            'status'=>'error',
+            'message'=>'Can\'t create account.'
+        ];
     }
 }
