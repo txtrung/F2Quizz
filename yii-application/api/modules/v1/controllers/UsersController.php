@@ -58,14 +58,12 @@ class UsersController extends ActiveController
      */
     public function actionRegister() {
         if($_POST && count($_POST)) {
-        $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
-            return $this->goHome();
-        }
-
-        return $this->render('signup', [
-            'model' => $model,
-        ]);
+            $model = new SignupForm();
+            if ($model->load(ArrayHelper::toArray(json_decode(\Yii::$app->getRequest()->post()["register"])),'') && $model->signup()) {
+                return ['status'=>'success'];
+            } else {
+                return $model->getFirstErrors();
+            }
         }
         return ['status'=>'error'];
     }

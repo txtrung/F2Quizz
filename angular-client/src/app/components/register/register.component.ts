@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
-      email: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       username: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
@@ -42,6 +42,14 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
+    const formData = new FormData();
+    formData.append('register', JSON.stringify({
+          username: this.f.username.value,
+          password: this.f.password.value,
+          email: this.f.email.value
+        })
+    );
+
     this.submitted = true;
 
     // reset alerts on submit
@@ -53,7 +61,7 @@ export class RegisterComponent implements OnInit {
     }
 
     this.loading = true;
-    this.userService.register(this.registerForm.value)
+    this.userService.register(formData)
         .pipe(first())
         .subscribe(
             data => {

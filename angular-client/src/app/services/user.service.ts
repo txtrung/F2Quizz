@@ -49,8 +49,8 @@ export class UserService {
     return this.http.get<User[]>(`${GlobalConstants.localURL}/users`);
   }
 
-  register(user: User) {
-    return this.http.post(`${GlobalConstants.localURL}/users/register`, user);
+  register(data) {
+    return this.http.post(`${GlobalConstants.serverURL + this._registerApi}`, data);
   }
 
   delete(id: number) {
