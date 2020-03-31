@@ -17,10 +17,7 @@ import {AlertService} from "../../services/alert.service";
 export class QuizzesComponent implements OnInit {
 
   public quizzes = [];
-  public errorMsg;
   private loading = true;
-  private userAnswerQuizzInfo = [];
-  private nextQuizz;
 
   constructor(
       private router: Router,
@@ -31,25 +28,9 @@ export class QuizzesComponent implements OnInit {
 
   ngOnInit() {
     let self = this;
-    this.userAnswerQuizzInfo = self._userService.getUserAnswerQuizzInfo();
     this._quizzService.getQuizzes().subscribe(data => {
       self.quizzes = data;
-      if (window.history.state.continuePlaying !== undefined && window.history.state.continuePlaying) {
-        data.map(item=>{
-          if (self.userAnswerQuizzInfo.findIndex(element=>element.id == item.id) === -1) {
-            self.nextQuizz = item;
-            return;
-          } else {
-            self.nextQuizz = null;
-          }
-        });
-      }
       self.loading = false;
-      if (self.nextQuizz !== undefined && self.nextQuizz) {
-        self.goToQuestionsPage(self.nextQuizz);
-      } else {
-
-      }
     },error => {
       this.alertService.error(GlobalConstants.serverError);
       self.loading = false;
@@ -59,10 +40,6 @@ export class QuizzesComponent implements OnInit {
 
   goToQuestionsPage(quizz): void {
     let quizzString = JSON.stringify(quizz);
-    this._userService.setUserAnswerQuizzInfo({
-      id: quizz.id,
-      questionAnsweredResult: false
-    });
     this._quizzService.setCurrentQuizzInfo(quizzString);
     this.router.navigateByUrl('/'+GlobalConstants.questionsUrl, {state: {quizz:quizzString}});
   }
