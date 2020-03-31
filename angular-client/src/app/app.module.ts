@@ -36,10 +36,28 @@ import { RegisterComponent } from './components/register/register.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AlertComponent } from './components/share/alert/alert.component';
 
+export function socialConfigs() {
+    const config = new AuthServiceConfig(
+        [
+            {
+                id: FacebookLoginProvider.PROVIDER_ID,
+                provider: new FacebookLoginProvider('app-id')
+            },
+            {
+                id: GoogleLoginProvider.PROVIDER_ID,
+                provider: new GoogleLoginProvider('app-id')
+            }
+        ]
+    );
+    return config;
+}
+
 // used to create fake backend
 import { fakeBackendProvider } from './helpers/fake-backend';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { ErrorInterceptor } from './helpers/error.interceptor';
+import {AuthServiceConfig, FacebookLoginProvider, GoogleLoginProvider} from "angularx-social-login";
+import {SocialloginService} from "./services/sociallogin.service";
 
 // required for AOT compilation
 export function HttpLoaderFactory(http: HttpClient) {
@@ -103,7 +121,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     DownloadService,
     LoadingComponent,
   // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-  { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    {
+        provide: [HTTP_INTERCEPTORS,AuthServiceConfig],
+        useClass: ErrorInterceptor,
+        multi: true,
+        useFactory: socialConfigs
+    },
+      SocialloginService,
 
   // provider used to create fake backend
   // fakeBackendProvider
