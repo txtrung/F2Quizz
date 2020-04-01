@@ -35,29 +35,28 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AlertComponent } from './components/share/alert/alert.component';
+// used to create fake backend
+import { fakeBackendProvider } from './helpers/fake-backend';
+import { JwtInterceptor } from './helpers/jwt.interceptor';
+import { ErrorInterceptor } from './helpers/error.interceptor';
+import {AuthService, AuthServiceConfig, FacebookLoginProvider, GoogleLoginProvider} from "angularx-social-login";
+import {SocialloginService} from "./services/sociallogin.service";
 
 export function socialConfigs() {
     const config = new AuthServiceConfig(
         [
             {
                 id: FacebookLoginProvider.PROVIDER_ID,
-                provider: new FacebookLoginProvider('app-id')
+                provider: new FacebookLoginProvider('629440464278771')
             },
             {
                 id: GoogleLoginProvider.PROVIDER_ID,
-                provider: new GoogleLoginProvider('app-id')
+                provider: new GoogleLoginProvider('64618470872-gc2eu3e3t4vpr589hrhhj38tplvkie36.apps.googleusercontent.com')
             }
         ]
     );
     return config;
 }
-
-// used to create fake backend
-import { fakeBackendProvider } from './helpers/fake-backend';
-import { JwtInterceptor } from './helpers/jwt.interceptor';
-import { ErrorInterceptor } from './helpers/error.interceptor';
-import {AuthServiceConfig, FacebookLoginProvider, GoogleLoginProvider} from "angularx-social-login";
-import {SocialloginService} from "./services/sociallogin.service";
 
 // required for AOT compilation
 export function HttpLoaderFactory(http: HttpClient) {
@@ -122,12 +121,16 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoadingComponent,
   // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     {
-        provide: [HTTP_INTERCEPTORS,AuthServiceConfig],
+        provide: HTTP_INTERCEPTORS,
         useClass: ErrorInterceptor,
-        multi: true,
-        useFactory: socialConfigs
+        multi: true
     },
-      SocialloginService,
+  SocialloginService,
+  {
+      provide: AuthServiceConfig,
+      useFactory: socialConfigs
+  },
+      AuthService
 
   // provider used to create fake backend
   // fakeBackendProvider

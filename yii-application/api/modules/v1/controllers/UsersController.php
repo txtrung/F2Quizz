@@ -5,6 +5,7 @@ namespace api\modules\v1\controllers;
 use api\modules\v1\models\Questions;
 use api\modules\v1\models\Quizzes;
 use api\modules\v1\models\SignupForm;
+use api\modules\v1\models\SocialUsers;
 use Yii;
 use yii\rest\ActiveController;
 use yii\helpers\ArrayHelper;
@@ -71,6 +72,49 @@ class UsersController extends ActiveController
         return [
             'status'=>'error',
             'message'=>'Can\'t create account.'
+        ];
+    }
+
+    /**
+     * Signs user up.
+     *
+     * @return mixed
+     */
+    public function actionSocialAuthenticate() {
+//        var_dump(ArrayHelper::toArray(json_decode(\Yii::$app->getRequest()->post()["social-authenticate"])));
+        if($_POST && count($_POST)) {
+            $userData = ArrayHelper::toArray(json_decode(\Yii::$app->getRequest()->post()["social-authenticate"]));
+            $user = SocialUsers::findByEmail($userData["email"]);
+            if ($user) {
+                $access_token = $user->generateAccessToken();
+                $user->expire_at = time() + SocialUsers::EXPIRE_TIME;
+                if ($user->save()) {
+                    return [
+                        'status'=>'success',
+                        'access_token'=>$access_token
+                    ];
+                }
+            } else {
+                $model = new SocialUsers();
+                $model->id = $userData['id'];
+                $model->name = $userData['name'];
+                $model->email = $userData['email'];
+                $model->auth_token = $userData['authToken'];
+                $model->provider = $userData['provider'];
+                $model->status = SocialUsers::STATUS_ACTIVE;
+                $model->access_token = Yii::$app->security->generateRandomString();
+                $model->expire_at = time() + SocialUsers::EXPIRE_TIME;
+                if ($model->save()) {
+                    return [
+                        'status'=>'success',
+                        'access_token'=>$model->access_token
+                    ];
+                }
+            }
+        }
+        return [
+            'status'=>'error',
+            'message'=>'Can\'t login.'
         ];
     }
 }

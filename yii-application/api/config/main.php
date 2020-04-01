@@ -94,7 +94,8 @@ return [
                     'extraPatterns' => [
                         'GET test'=>'test',
                         'POST authenticate' => 'authenticate',
-                        'POST register' => 'register'
+                        'POST register' => 'register',
+                        'POST social-authenticate' => 'social-authenticate'
                     ],
                 ]
             ],

@@ -29,7 +29,7 @@ export class UserService {
     return this.currentUserSubject.value;
   }
 
-    login(data) {
+  login(data) {
     return this.http.post<any>(`${GlobalConstants.serverURL + this._authenticateApi}`, data)
         .pipe(map(data => {
           if (data.status === GlobalConstants.success) {

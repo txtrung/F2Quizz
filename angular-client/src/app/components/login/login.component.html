@@ -37,10 +37,10 @@
                     <button mat-icon-button (click)="loginFshare()">
                         <mat-icon svgIcon="icon_fshare"></mat-icon>
                     </button>
-                    <button mat-icon-button (click)="loginFacebook()">
+                    <button mat-icon-button (click)="socialSignIn('facebook')">
                         <mat-icon svgIcon="icon_facebook"></mat-icon>
                     </button>
-                    <button mat-icon-button (click)="loginGoogle()" >
+                    <button mat-icon-button (click)="socialSignIn('google')" >
                         <mat-icon svgIcon="icon_google"></mat-icon>
                     </button>
                     <p class="register-title">{{ "login.new-account" | translate }}</p>

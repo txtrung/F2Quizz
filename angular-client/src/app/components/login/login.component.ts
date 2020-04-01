@@ -7,6 +7,9 @@ import {UserService} from "../../services/user.service";
 import {AlertService} from 'src/app/services/alert.service';
 import {first} from "rxjs/operators";
 import {GlobalConstants} from "../../common/global-constants";
+import {AuthService, FacebookLoginProvider, GoogleLoginProvider} from 'angularx-social-login';
+import {SocialloginService} from "../../services/sociallogin.service";
+import {Socialusers} from 'src/app/models/socialusers';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +22,8 @@ export class LoginComponent implements OnInit {
   loading = false;
   submitted = false;
   returnUrl: string;
+  response;
+  socialUsers = new Socialusers();
 
   constructor(
       private matIconRegistry: MatIconRegistry,
@@ -27,7 +32,9 @@ export class LoginComponent implements OnInit {
       private route: ActivatedRoute,
       private router: Router,
       private authenticationService: UserService,
-      private alertService: AlertService
+      private alertService: AlertService,
+      public oAuth: AuthService,
+      private socialloginService: SocialloginService,
   ) {
     this.matIconRegistry.addSvgIcon(
         'icon_facebook',
@@ -99,16 +106,42 @@ export class LoginComponent implements OnInit {
             });
   }
 
+  public socialSignIn(socialProvider: string) {
+    this.loading = true;
+    let socialPlatformProvider;
+    if (socialProvider === 'facebook') {
+      socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
+    } else if (socialProvider === 'google') {
+      socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
+    }
+    this.oAuth.signIn(socialPlatformProvider).then(socialusers => {
+      // @ts-ignore
+      this.savesResponse(socialusers);
+    },error => {
+      this.loading = false;
+    });
+  }
+
+  savesResponse(socialusers: Socialusers) {
+    const socialFormData = new FormData();
+    socialFormData.append('social-authenticate', JSON.stringify(socialusers));
+
+    this.socialloginService.savesResponse(socialFormData).pipe(first()).subscribe(data => {
+          if (GlobalConstants.success === data.status) {
+            this.router.navigate([this.returnUrl]);
+          }
+          if (GlobalConstants.error === data.status) {
+            this.alertService.error(data.message);
+            this.loading = false;
+          }
+        },
+        error => {
+          this.alertService.error(error);
+          this.loading = false;
+        })
+  }
+
   loginFshare() {
 
   }
-
-  loginFacebook() {
-
-  }
-
-  loginGoogle() {
-
-  }
-
 }
