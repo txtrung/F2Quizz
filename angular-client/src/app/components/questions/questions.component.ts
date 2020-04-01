@@ -5,6 +5,8 @@ import {ResultsComponent} from "../results/results.component";
 import {QuizzService} from "../../services/quizz.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {QuestionService} from "../../services/question.service";
+import {GlobalConstants} from "../../common/global-constants";
+import {AlertService} from "../../services/alert.service";
 
 @Component({
   selector: 'app-questions',
@@ -32,7 +34,8 @@ export class QuestionsComponent implements OnInit {
       public dialog: MatDialog,
       private route: ActivatedRoute,
       private router: Router,
-      private _cdr: ChangeDetectorRef
+      private _cdr: ChangeDetectorRef,
+      private alertService: AlertService
   ) {
   }
 
@@ -49,7 +52,11 @@ export class QuestionsComponent implements OnInit {
           this.questionsOrder = 0;
           this.setContentPage(this.questionsOrder);
         }
-      }, error => this.errorMsg = error);
+      }, error => {
+        this.alertService.error(GlobalConstants.serverError);
+        this.loading = false;
+        // this.errorMsg = error
+      });
     }
   }
 

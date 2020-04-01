@@ -4,13 +4,15 @@
             <app-app-bar-header></app-app-bar-header>
         </mat-grid-tile-header>
         <div class="mat-grid-tile-body">
-            <div class="left"></div>
-            <app-quizzes *ngIf="quizzesPage"></app-quizzes>
-            <app-questions *ngIf="questionsPage"></app-questions>
+            <div class="left">
+            </div>
+            <div class="middle scrollbar">
+                <app-quizzes *ngIf="quizzesPage"></app-quizzes>
+                <app-questions *ngIf="questionsPage"></app-questions>
+            </div>
             <div class="right"></div>
         </div>
         <mat-grid-tile-footer class="grid-tile-footer">
-
         </mat-grid-tile-footer>
     </mat-grid-tile>
 </mat-grid-list>

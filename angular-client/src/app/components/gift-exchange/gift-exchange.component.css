@@ -1,7 +1,27 @@
-.success-upload {
+mat-card {
+    box-shadow: unset !important;
+}
+
+/*mat-card-title h1 {*/
+/*    font-size: 200%;*/
+/*}*/
+
+.mat-error h2 {
+    color: red;
+}
+
+.success-upload h2{
     color: green;
 }
 
 .prize-link-download a{
     cursor: pointer;
+}
+
+mat-card-content {
+    margin-bottom: unset;
+}
+
+mat-list-item {
+    height: 30px !important;
 }

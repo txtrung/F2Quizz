@@ -1,6 +1,6 @@
 <mat-toolbar>
     <mat-toolbar-row>
-        <a mat-button aria-label="f2quizz" tabindex="0" aria-disabled="false" class="logo">
+        <a mat-button aria-label="f2quizz" tabindex="0" aria-disabled="false" class="logo" href="./">
             <span class="mat-button-wrapper">
                 <img class="logo-img" src="assets/imgs/ambulance-icon_1.svg" alt="f2quizz">
                 <span class="logo-name">{{'global.app-name' | translate}}</span>
@@ -8,7 +8,10 @@
         </a>
         <span class="example-spacer"></span>
         <button class="play-new" mat-flat-button>{{ 'header.new' | translate}}</button>
-        <button class="login" mat-flat-button>{{ 'header.login' | translate}}</button>
-        <button class="logout" mat-flat-button>{{ 'header.logout' | translate}}</button>
+        <div *ngIf="!currentUser">
+            <a routerLink="/login" routerLinkActive="active" class="login" mat-flat-button>{{ 'global.login' | translate}}</a>
+            <a routerLink="/register" routerLinkActive="active" class="register" mat-flat-button>{{ 'global.register' | translate}}</a>
+        </div>
+        <a *ngIf="currentUser" routerLinkActive="active" class="logout" mat-flat-button (click)="logout()">{{ 'global.logout' | translate}}</a>
     </mat-toolbar-row>
 </mat-toolbar>

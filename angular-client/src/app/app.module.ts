@@ -13,7 +13,7 @@ import {
     MatIconModule,
     MatRadioModule,
     MatToolbarModule,
-    MatInputModule
+    MatInputModule, MatListModule, MatSelectModule
 } from "@angular/material";
 import { MasterPageComponent } from './components/master-page/master-page.component';
 import { QuizzesComponent } from './components/quizzes/quizzes.component';
@@ -21,7 +21,7 @@ import { AppBarHeaderComponent } from './components/app-bar-header/app-bar-heade
 import {MatButtonModule} from '@angular/material/button';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
-import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
 import { QuestionsComponent } from './components/questions/questions.component';
 import { ResultsComponent } from './components/results/results.component';
 import {QuizzService} from "./services/quizz.service";
@@ -30,6 +30,33 @@ import { GiftComponent } from './components/gift/gift.component';
 import { GiftExchangeComponent } from './components/gift-exchange/gift-exchange.component';
 import {DownloadService} from "./services/download.service";
 import { HttpModule } from '@angular/http';
+import { LoadingComponent } from './components/share/loading/loading.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { AlertComponent } from './components/share/alert/alert.component';
+// used to create fake backend
+import { fakeBackendProvider } from './helpers/fake-backend';
+import { JwtInterceptor } from './helpers/jwt.interceptor';
+import { ErrorInterceptor } from './helpers/error.interceptor';
+import {AuthService, AuthServiceConfig, FacebookLoginProvider, GoogleLoginProvider} from "angularx-social-login";
+import {SocialloginService} from "./services/sociallogin.service";
+
+export function socialConfigs() {
+    const config = new AuthServiceConfig(
+        [
+            {
+                id: FacebookLoginProvider.PROVIDER_ID,
+                provider: new FacebookLoginProvider('629440464278771')
+            },
+            {
+                id: GoogleLoginProvider.PROVIDER_ID,
+                provider: new GoogleLoginProvider('64618470872-gc2eu3e3t4vpr589hrhhj38tplvkie36.apps.googleusercontent.com')
+            }
+        ]
+    );
+    return config;
+}
 
 // required for AOT compilation
 export function HttpLoaderFactory(http: HttpClient) {
@@ -45,12 +72,17 @@ export function HttpLoaderFactory(http: HttpClient) {
     QuestionsComponent,
     ResultsComponent,
     GiftComponent,
-    GiftExchangeComponent
+    GiftExchangeComponent,
+    LoadingComponent,
+    LoginComponent,
+    RegisterComponent,
+    AlertComponent,
   ],
     entryComponents: [
         ResultsComponent,
         GiftComponent,
-        GiftExchangeComponent
+        GiftExchangeComponent,
+        LoadingComponent
     ],
     imports: [
         BrowserModule,
@@ -78,11 +110,30 @@ export function HttpLoaderFactory(http: HttpClient) {
         MatDialogModule,
         MatInputModule,
         ReactiveFormsModule,
+        MatListModule,
+        FlexLayoutModule,
+        MatSelectModule
     ],
   providers: [
     QuizzService,
     QuestionService,
-    DownloadService
+    DownloadService,
+    LoadingComponent,
+  // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    {
+        provide: HTTP_INTERCEPTORS,
+        useClass: ErrorInterceptor,
+        multi: true
+    },
+  SocialloginService,
+  {
+      provide: AuthServiceConfig,
+      useFactory: socialConfigs
+  },
+      AuthService
+
+  // provider used to create fake backend
+  // fakeBackendProvider
   ],
   bootstrap: [AppComponent]
 })

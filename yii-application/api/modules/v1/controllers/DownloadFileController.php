@@ -21,7 +21,7 @@ class DownloadFileController extends ActiveController
             [
                 'class' => Cors::className(),
                 'cors' => [
-                    'Origin' => ['*'],
+                    'Origin' => \Yii::$app->params['clientDomain'],
                     'Access-Control-Request-Method' => ['GET', 'HEAD', 'OPTIONS'],
                 ],
             ],

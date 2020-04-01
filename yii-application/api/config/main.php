@@ -19,8 +19,10 @@ return [
     ],
     'components' => [
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => 'api\modules\models\Users',
             'enableAutoLogin' => false,
+            'enableSession'=>false,
+            //'identityCookie' => ['name' => '_identity-api', 'httpOnly' => true],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -85,10 +87,23 @@ return [
                         'POST post-upload-file' => 'post-upload-file',
                     ],
                 ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'v1/users',
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET test'=>'test',
+                        'POST authenticate' => 'authenticate',
+                        'POST register' => 'register',
+                        'POST social-authenticate' => 'social-authenticate'
+                    ],
+                ]
             ],
         ],
         'request' => [
             'parsers' =>['application/json' => 'yii\web\JsonParser', ],
+            'enableCookieValidation' => false,
+            'enableCsrfValidation' => false,
         ]
     ],
     'params' => $params,

@@ -11,6 +11,7 @@ h2, h3 {
 }
 body {
   margin: 2em;
+  background-color: #303030;
 }
 body, input[type="text"], button {
   color: #333;
@@ -45,4 +46,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   opacity: 0.5;
   z-index: 499999;
   position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mat-card-title h1 {
+  font-size: 200% !important;
+}
+
+input[type="text"] {
+  color: white;
 }

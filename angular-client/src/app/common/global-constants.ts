@@ -7,4 +7,7 @@ export class GlobalConstants {
     public static splash: string = '/';
     public static quizzesPage: boolean = false;
     public static questionsPage: boolean = false;
+    public static success: string = 'success';
+    public static error: string = 'error';
+    public static serverError: string = 'Server error';
 }

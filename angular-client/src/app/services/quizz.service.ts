@@ -23,12 +23,12 @@ export class QuizzService {
   ) {}
 
   getQuizzes(): Observable<Quizz[]> {
-    return this.http.get<Quizz[]>(this._getQuizzUrl).pipe(catchError(this.errorHandler));
+    return this.http.get<Quizz[]>(this._getQuizzUrl);
   }
 
   getQuestionByQuizzId(quizzId=''): Observable<Question[]> {
     let url = this._getQuizzUrl + this._splash + quizzId + this._getQuestionByQuizzIdUrl;
-    return this.http.get<Question[]>(url).pipe(catchError(this.errorHandler));
+    return this.http.get<Question[]>(url);
   }
 
   errorHandler(error: HttpErrorResponse) {

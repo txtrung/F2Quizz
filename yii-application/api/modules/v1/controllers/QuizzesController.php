@@ -4,6 +4,7 @@ namespace api\modules\v1\controllers;
 
 use api\modules\v1\models\Questions;
 use api\modules\v1\models\Quizzes;
+use Yii;
 use yii\rest\ActiveController;
 use yii\helpers\ArrayHelper;
 use yii\filters\Cors;
@@ -19,7 +20,7 @@ class QuizzesController extends ActiveController
             [
                 'class' => Cors::className(),
                 'cors' => [
-                    'Origin' => ['*'],
+                    'Origin' => \Yii::$app->params['clientDomain'],
                     'Access-Control-Request-Method' => ['GET', 'HEAD', 'OPTIONS'],
                 ],
             ],

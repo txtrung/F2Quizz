@@ -1,12 +1,12 @@
-<div class="overlay" *ngIf="loading"></div>
-<div class="main-content" [ngStyle]="{'background-image': 'url(/assets/imgs/loading2.svg)'}" *ngIf="loading"></div>
-<div *ngIf="errorMsg"><h3>{{errorMsg}}</h3></div>
+<app-loading [loading]="loading"></app-loading>
+<!--<div *ngIf="errorMsg"><h3>{{errorMsg}}</h3></div>-->
+<app-alert></app-alert>
 <div *ngIf="quizzes">
-    <ul class="quizzes">
-        <li *ngFor="let quizz of quizzes">
+    <mat-list class="quizzes">
+        <mat-list-item *ngFor="let quizz of quizzes">
             <a (click)="goToQuestionsPage({id: quizz.id,title: quizz.title,des: quizz.description});quizz.id='';quizz.title='';quizz.description=''">
                 {{ quizz.title + ': ' + quizz.description}}
             </a>
-        </li>
-    </ul>
+        </mat-list-item>
+    </mat-list>
 </div>

@@ -1,9 +1,20 @@
-<div *ngIf="errorMsg"><h3 style="color: red">{{errorMsg}}</h3></div>
-<h1 mat-dialog-title class="gift-header">{{"result.download-prize" | translate}}</h1>
-<div mat-dialog-content class="gift-download-link">
-    <a (click)="download()">{{"result.download-prize-content" | translate}}</a>
-</div>
-<div class="result-action-button" mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">{{"result.stop-play" | translate}}</button>
-    <button mat-button (click)="onContinuePlay()">{{"result.continue-play" | translate}}</button>
-</div>
+<!--<div *ngIf="errorMsg"><h3 style="color: red">{{errorMsg}}</h3></div>-->
+<app-alert></app-alert>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            <h1 mat-dialog-title class="gift-header">{{"result.download-prize" | translate}}</h1>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div mat-dialog-content class="gift-download-link">
+            <a (click)="download()">{{"result.download-prize-content" | translate}}</a>
+        </div>
+    </mat-card-content>
+    <mat-card-actions>
+        <mat-action-list class="result-action-button" mat-dialog-actions>
+            <button mat-button (click)="onNoClick()">{{"result.stop-play" | translate}}</button>
+            <button mat-button (click)="onContinuePlay()">{{"result.continue-play" | translate}}</button>
+        </mat-action-list>
+    </mat-card-actions>
+</mat-card>

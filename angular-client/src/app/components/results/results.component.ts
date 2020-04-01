@@ -38,42 +38,29 @@ export class ResultsComponent implements OnInit {
     this.rightAnswers = this.data.rightAnswers;
     this.totalQuestions = this.data.totalQuestions;
     this.quizzId = this.data.quizzId;
-    this.win =  this.checkIsWinner() || (this.rightAnswers == this.totalQuestions);
-    this._userService.setUserAnswerQuizzInfo({
-      id: this.quizzId,
-      questionAnsweredResult: this.win
-    });
+    this.win = (this.rightAnswers == this.totalQuestions);
   }
 
-  checkIsWinner(): boolean {
-    let check = false;
-    this._userService.getUserAnswerQuizzInfo().map(value=>{
-      if (value.questionAnsweredResult) {
-        check = true;
-        return;
-      }
-    });
-    return check;
+  clearData(): void {
+    this.dialogRef.close();
+    this._questionService.removeAnsweredData();
   }
 
   onNoClick(): void {
-    this.dialogRef.close();
-    this._questionService.removeAnsweredData();
-    if (!this.checkIsWinner())
-      this.router.navigateByUrl(GlobalConstants.splash+GlobalConstants.quizzesUrl);
-    else
+    if (this.win) {
       this.openDialog(GiftComponent);
+      this._questionService.removeAnsweredData();
+    }
+    this.dialogRef.close();
   }
 
   onGetPrize(): void {
-    this.dialogRef.close();
-    this._questionService.removeAnsweredData();
+    this.clearData();
     this.openDialog(GiftExchangeComponent);
   }
 
   onContinuePlay(): void {
-    this.dialogRef.close();
-    this._questionService.removeAnsweredData();
+    this.clearData();
     this.router.navigateByUrl(GlobalConstants.splash+GlobalConstants.quizzesUrl, {state: {continuePlaying: true}});
   }
 

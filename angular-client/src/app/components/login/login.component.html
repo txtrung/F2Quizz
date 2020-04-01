@@ -1,0 +1,52 @@
+<app-loading [loading]="loading"></app-loading>
+<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+    <mat-card class="box">
+        <mat-card-header>
+            <mat-card-title>{{ 'global.login' | translate}}</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+            <form class="example-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                        <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" matInput placeholder="{{ 'global.username' | translate }}" />
+                        <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                            <div *ngIf="f.username.errors.required">Username is required</div>
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                        <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" matInput placeholder="{{ 'global.password' | translate }}" />
+                        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                            <div *ngIf="f.password.errors.required">Password is required</div>
+                        </div>
+                    </mat-form-field>
+                </div>
+                <app-alert></app-alert>
+                <div class="form-group">
+                    <button mat-button class="btn-block">{{ 'global.login' | translate}}</button>
+                </div>
+            </form>
+        </mat-card-content>
+
+        <mat-card-footer>
+            <mat-card-actions>
+                <mat-action-list class="login-action-button">
+                    <p class="other-login-title">{{ "login.other-login" | translate }}</p>
+                    <button mat-icon-button (click)="loginFshare()">
+                        <mat-icon svgIcon="icon_fshare"></mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="socialSignIn('facebook')">
+                        <mat-icon svgIcon="icon_facebook"></mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="socialSignIn('google')" >
+                        <mat-icon svgIcon="icon_google"></mat-icon>
+                    </button>
+                    <p class="register-title">{{ "login.new-account" | translate }}</p>
+                    <a routerLink="/register" routerLinkActive="active" class="register-button" mat-flat-button>{{ 'global.register' | translate}}</a>
+                </mat-action-list>
+            </mat-card-actions>
+        </mat-card-footer>
+    </mat-card>
+</div>
