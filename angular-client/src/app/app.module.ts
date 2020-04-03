@@ -7,13 +7,13 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
 import {
-    MatCardModule,
-    MatCheckboxModule, MatDialogModule, MatFormFieldModule,
-    MatGridListModule,
-    MatIconModule,
-    MatRadioModule,
-    MatToolbarModule,
-    MatInputModule, MatListModule, MatSelectModule
+  MatCardModule,
+  MatCheckboxModule, MatDialogModule, MatFormFieldModule,
+  MatGridListModule,
+  MatIconModule,
+  MatRadioModule,
+  MatToolbarModule,
+  MatInputModule, MatListModule, MatSelectModule
 } from "@angular/material";
 import { MasterPageComponent } from './components/master-page/master-page.component';
 import { QuizzesComponent } from './components/quizzes/quizzes.component';
@@ -43,19 +43,19 @@ import {AuthService, AuthServiceConfig, FacebookLoginProvider, GoogleLoginProvid
 import {SocialloginService} from "./services/sociallogin.service";
 
 export function socialConfigs() {
-    const config = new AuthServiceConfig(
-        [
-            {
-                id: FacebookLoginProvider.PROVIDER_ID,
-                provider: new FacebookLoginProvider('629440464278771')
-            },
-            {
-                id: GoogleLoginProvider.PROVIDER_ID,
-                provider: new GoogleLoginProvider('64618470872-572u0bv0q1mfv6pgigd1q0f93pvbdmlu.apps.googleusercontent.com')
-            }
-        ]
-    );
-    return config;
+  const config = new AuthServiceConfig(
+    [
+      {
+        id: FacebookLoginProvider.PROVIDER_ID,
+        provider: new FacebookLoginProvider('629440464278771')
+      },
+      {
+        id: GoogleLoginProvider.PROVIDER_ID,
+        provider: new GoogleLoginProvider('64618470872-sj18nh89bgj1dtff43gd10sabkmh7nnt.apps.googleusercontent.com')
+      }
+    ]
+  );
+  return config;
 }
 
 // required for AOT compilation
@@ -78,62 +78,62 @@ export function HttpLoaderFactory(http: HttpClient) {
     RegisterComponent,
     AlertComponent,
   ],
-    entryComponents: [
-        ResultsComponent,
-        GiftComponent,
-        GiftExchangeComponent,
-        LoadingComponent
-    ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        HttpModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: (HttpLoaderFactory),
-                deps: [HttpClient],
-            }
-        }),
-        AppRoutingModule,
-        FormsModule,
-        BrowserAnimationsModule,
-        MatSliderModule,
-        MatGridListModule,
-        MatToolbarModule,
-        MatIconModule,
-        MatButtonModule,
-        MatCardModule,
-        MatCheckboxModule,
-        MatRadioModule,
-        MatFormFieldModule,
-        MatDialogModule,
-        MatInputModule,
-        ReactiveFormsModule,
-        MatListModule,
-        FlexLayoutModule,
-        MatSelectModule
-    ],
+  entryComponents: [
+    ResultsComponent,
+    GiftComponent,
+    GiftExchangeComponent,
+    LoadingComponent
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    HttpModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (HttpLoaderFactory),
+        deps: [HttpClient],
+      }
+    }),
+    AppRoutingModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    MatSliderModule,
+    MatGridListModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatRadioModule,
+    MatFormFieldModule,
+    MatDialogModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatListModule,
+    FlexLayoutModule,
+    MatSelectModule
+  ],
   providers: [
     QuizzService,
     QuestionService,
     DownloadService,
     LoadingComponent,
-  // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     {
-        provide: HTTP_INTERCEPTORS,
-        useClass: ErrorInterceptor,
-        multi: true
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
     },
-  SocialloginService,
-  {
+    SocialloginService,
+    {
       provide: AuthServiceConfig,
       useFactory: socialConfigs
-  },
-      AuthService
+    },
+    AuthService
 
-  // provider used to create fake backend
-  // fakeBackendProvider
+    // provider used to create fake backend
+    // fakeBackendProvider
   ],
   bootstrap: [AppComponent]
 })
