@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {UserService} from "../../services/user.service";
 import {Router} from "@angular/router";
 import {User} from "../../models/user";
-import {SocialloginService} from "../../services/sociallogin.service";
 
 @Component({
   selector: 'app-app-bar-header',
@@ -15,11 +14,9 @@ export class AppBarHeaderComponent implements OnInit {
 
   constructor(
       private router: Router,
-      private authenticationService: UserService,
-      private authenticationSocialService: SocialloginService,
+      private authenticationService: UserService
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    this.authenticationSocialService.currentUser.subscribe(x => this.currentUser = x);
   }
 
   ngOnInit() {
