@@ -17,11 +17,11 @@ export class GiftExchangeComponent implements OnInit {
 
   form: FormGroup;
   uploadResponse;
-  private successUpload = false;
-  private message = '';
-  private downloadedCount = 0;
-  private downloadLinks;
-  private loading = false;
+  public successUpload = false;
+  public message = '';
+  public downloadedCount = 0;
+  public downloadLinks;
+  public loading = false;
 
   constructor(
       private router: Router,

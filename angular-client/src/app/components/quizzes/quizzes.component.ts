@@ -17,7 +17,7 @@ import {AlertService} from "../../services/alert.service";
 export class QuizzesComponent implements OnInit {
 
   public quizzes = [];
-  private loading = true;
+  public loading = true;
 
   constructor(
       private router: Router,

@@ -16,17 +16,17 @@ import {AlertService} from "../../services/alert.service";
 export class QuestionsComponent implements OnInit {
 
   public errorMsg;
-  private loading: boolean = true;
-  private categoryTitle: string;
-  private categoryDescription: string;
-  private answers = [];
-  private questionsOrder: any;
-  private questions = [];
-  private question: Question;
-  private quizz;
-  private answeredQuestion: any;
-  private checkedAnswer = [];
-  private checkedResult = 0;
+  public loading: boolean = true;
+  public categoryTitle: string;
+  public categoryDescription: string;
+  public answers = [];
+  public questionsOrder: any;
+  public questions = [];
+  public question: Question;
+  public quizz;
+  public answeredQuestion: any;
+  public checkedAnswer = [];
+  public checkedResult = 0;
 
   constructor(
       private _quizzService: QuizzService,
