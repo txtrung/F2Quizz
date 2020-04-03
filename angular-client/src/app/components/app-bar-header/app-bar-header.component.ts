@@ -19,7 +19,7 @@ export class AppBarHeaderComponent implements OnInit {
       private authenticationSocialService: SocialloginService,
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    this.authenticationSocialService.currentUser.subscribe(x => this.currentUser = x)
+    this.authenticationSocialService.currentUser.subscribe(x => this.currentUser = x);
   }
 
   ngOnInit() {
