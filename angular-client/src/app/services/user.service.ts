@@ -14,7 +14,7 @@ export class UserService {
   private _userApi: string = '/v1/users';
   private _authenticateApi: string = '/v1/users/authenticate';
   private _registerApi: string = '/v1/users/register';
-  private currentUserSubject: BehaviorSubject<User>;
+  public currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
 
   constructor(

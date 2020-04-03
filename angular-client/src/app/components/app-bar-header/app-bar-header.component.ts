@@ -15,11 +15,9 @@ export class AppBarHeaderComponent implements OnInit {
 
   constructor(
       private router: Router,
-      private authenticationService: UserService,
-      private authenticationSocialService: SocialloginService,
+      private authenticationService: UserService
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    this.authenticationSocialService.currentUser.subscribe(x => this.currentUser = x);
   }
 
   ngOnInit() {
