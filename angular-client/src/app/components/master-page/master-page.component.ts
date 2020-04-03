@@ -12,8 +12,8 @@ import {first} from "rxjs/operators";
 })
 export class MasterPageComponent implements OnInit {
 
-  private quizzesPage: boolean = false;
-  private questionsPage: boolean = false;
+  public quizzesPage: boolean = false;
+  public questionsPage: boolean = false;
   currentUser: User;
   users = [];
 

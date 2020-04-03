@@ -18,9 +18,9 @@ export class GiftComponent implements OnInit {
   constructor(
       private router: Router,
       public dialogRef: MatDialogRef<GiftComponent>,
-      private _downloadService: DownloadService,
-      private _userService: UserService,
-      private alertService: AlertService
+      public _downloadService: DownloadService,
+      public _userService: UserService,
+      public alertService: AlertService
   ){
     dialogRef.disableClose = true;
   }

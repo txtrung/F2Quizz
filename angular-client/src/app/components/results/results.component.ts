@@ -18,10 +18,10 @@ export interface DialogData {
 })
 export class ResultsComponent implements OnInit {
 
-  private rightAnswers = 0;
-  private totalQuestions = 0;
-  private quizzId;
-  private win = false;
+  public rightAnswers = 0;
+  public totalQuestions = 0;
+  public quizzId;
+  public win = false;
 
   constructor(
     public dialogRef: MatDialogRef<ResultsComponent>,
