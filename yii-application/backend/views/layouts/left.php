@@ -23,8 +23,8 @@ use yii\bootstrap\Nav;
         </div>
 
         <ul class="sidebar-menu tree" data-widget="tree">
-            <li><a href="<?= \yii\helpers\Url::to(['/gii']) ?>"><span class="fa fa-file-code-o"></span> Gii</a>
-            </li>
+<!--            <li><a href="--><?//= \yii\helpers\Url::to(['/gii']) ?><!--"><span class="fa fa-file-code-o"></span> Gii</a>-->
+<!--            </li>-->
             <li class="treeview active">
                 <a href="#">
                     <i class="fa fa-ambulance"></i> <span>F2Quizz</span>
@@ -37,12 +37,12 @@ use yii\bootstrap\Nav;
                     </li>
                     <li><a href="<?= \yii\helpers\Url::to(['/question']) ?>"><span class="fa fa-address-book"></span> Quản lý câu hỏi</a>
                     </li>
-                    <li><a href="<?= \yii\helpers\Url::to(['/policy']) ?>"><span class="fa fa-info"></span> Chính sách</a>
-                    </li>
-                    <li><a href="<?= \yii\helpers\Url::to(['/week']) ?>"><span class="fa fa-bar-chart"></span> Bảng xếp hạng tuần</a>
-                    </li>
-                    <li><a href="<?= \yii\helpers\Url::to(['/month']) ?>"><span class="fa fa-bar-chart"></span> Bảng xếp hạng tháng</a>
-                    </li>
+<!--                    <li><a href="--><?//= \yii\helpers\Url::to(['/policy']) ?><!--"><span class="fa fa-info"></span> Chính sách</a>-->
+<!--                    </li>-->
+<!--                    <li><a href="--><?//= \yii\helpers\Url::to(['/week']) ?><!--"><span class="fa fa-bar-chart"></span> Bảng xếp hạng tuần</a>-->
+<!--                    </li>-->
+<!--                    <li><a href="--><?//= \yii\helpers\Url::to(['/month']) ?><!--"><span class="fa fa-bar-chart"></span> Bảng xếp hạng tháng</a>-->
+<!--                    </li>-->
                 </ul>
             </li>
         </ul>

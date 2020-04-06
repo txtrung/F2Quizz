@@ -52,7 +52,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="item panel panel-default"><!-- widgetBody -->
                     <div class="panel-heading">
                         <h3 class="panel-title col-sm-4">Answers</h3>
-                        <h3 class="panel-title col-sm-4">Tag</h3>
                         <h3 class="panel-title col-sm-4">Right answer</h3>
                         <div class="clearfix"></div>
                     </div>
