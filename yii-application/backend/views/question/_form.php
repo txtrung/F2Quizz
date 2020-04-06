@@ -74,7 +74,7 @@ $modelsCorrectAnswerString =json_encode(ArrayHelper::toArray($tmpCorrectAnswerMo
                                             ]
                                     ])->radio(
                                             array(
-                                                    'checked'=> $modelAnswers->isNewRecord ? false : $tmpCorrectAnswerModel->right_answer === $modelAnswers->tag,
+                                                    'checked'=> $modelAnswers->isNewRecord ? false : intval($tmpCorrectAnswerModel->right_answer) === $modelAnswers->tag,
                                                     'class' => 'right_answer_checkbox',
                                                     'value' => $modelAnswers->isNewRecord ? 0 : $modelAnswers->tag
                                             )
