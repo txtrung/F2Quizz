@@ -101,7 +101,7 @@ class QuestionController extends Controller
                     if ($flag = $model->save(false)) {
                         foreach ($modelsAnswers as $index => $modelAnswers) {
                             $modelAnswers->question_id = $model->id;
-                            $modelAnswers->tag = $index;
+                            $modelAnswers->tag = $index+1;
                             if (! ($flag = $modelAnswers->save(false))) {
                                 $transaction->rollBack();
                                 break;
